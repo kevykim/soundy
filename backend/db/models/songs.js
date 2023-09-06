@@ -14,12 +14,28 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Songs.init({
-    userId: DataTypes.INTEGER,
-    albumId: DataTypes.INTEGER,
-    title: DataTypes.STRING,
-    description: DataTypes.STRING,
-    url: DataTypes.STRING,
-    imageUrl: DataTypes.STRING
+    userId: {
+      type: DataTypes.INTEGER
+    },
+    albumId: {
+      type: DataTypes.INTEGER
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    url: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    imageUrl: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   }, {
     sequelize,
     modelName: 'Songs',
