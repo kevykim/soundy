@@ -31,10 +31,10 @@ const songArr = [
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('Songs', )
+    await queryInterface.bulkInsert('Songs', songArr)
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Songs', )
+    await queryInterface.bulkDelete('Songs', songArr)
   }
 };

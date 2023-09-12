@@ -30,15 +30,11 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.bulkInsert("Albums",
       albumsArr
-   ,);
+   );
   },
 
   async down (queryInterface, Sequelize) {
     const op = Sequelize.Op;
-    await queryInterface.bulkDelete("Albums", 
-    {
-      userId: {[op.in]: [1,2,3]}
-    }, {}
-    )
+    await queryInterface.bulkDelete("Albums", { userId: {[op.in]: [1,2,3]}}, {})
   }
 };
