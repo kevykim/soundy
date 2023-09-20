@@ -3,24 +3,26 @@
 /** @type {import('sequelize-cli').Migration} */
 const bcrypt = require("bcryptjs");
 
-const userArr = 
-  [
-    {
-      email: "demo@user.io",
-      username: "Demo-lition",
-      hashedPassword: bcrypt.hashSync("password"),
-    },
-    {
-      email: "user1@user.io",
-      username: "FakeUser1",
-      hashedPassword: bcrypt.hashSync("password2"),
-    },
-    {
-      email: "user2@user.io",
-      username: "FakeUser2",
-      hashedPassword: bcrypt.hashSync("password3"),
-    },
-  ];
+const userArr = [
+  {
+    email: "demo@user.io",
+    username: "Demo-lition",
+    hashedPassword: bcrypt.hashSync("password"),
+    profileImg: "image.com",
+  },
+  {
+    email: "user1@user.io",
+    username: "FakeUser1",
+    hashedPassword: bcrypt.hashSync("password2"),
+    profileImg: "image.com",
+  },
+  {
+    email: "user2@user.io",
+    username: "FakeUser2",
+    hashedPassword: bcrypt.hashSync("password3"),
+    profileImg: "image.com",
+  },
+];
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
