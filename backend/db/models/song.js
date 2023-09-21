@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Song.hasMany(models.Comment, {foreignKey: 'songId', onDelete: 'CASCADE', hooks: true});
-      Song.belongsTo(models.User, {foreignKey: 'userId'});
+      Song.belongsTo(models.User, {foreignKey: 'userId', as: 'Artist'});
       Song.belongsTo(models.Album, {foreignKey: 'albumId'});
       Song.belongsToMany(models.Playlist, {through: models.PlaylistSong});
     }
@@ -37,7 +37,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     imageUrl: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
   }, {
     sequelize,
