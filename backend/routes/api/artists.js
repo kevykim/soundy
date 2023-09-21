@@ -25,7 +25,7 @@ router.get('/:artistId/songs', async (req, res, next) => {
         where : {userId : artistId},
     });
 
-    res.status = 200;
+    res.status(200);
     return res.json({Songs : allArtistSongs});
 
 });

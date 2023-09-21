@@ -6,6 +6,90 @@ const { handleValidationErrors } = require("../../utils/validation");
 const { requireAuth } = require('../../utils/auth')
 
 
+const validateSong = [
+check("title")
+    .exists({checkFalsy: true})
+    .withMessage('Song title is required'),
+check("url")
+    .exists({checkFalsy: true})
+    .withMessage('Audio is required'),
+handleValidationErrors,
+];
+
+
+// CREATE A SONG
+router.post("/", requireAuth, validateSong, async (req, res, next) => {
+
+    let {title, description, url, imageUrl, albumId} = req.body;
+    const userId = req.user.id
+
+    let albumExists = false;
+
+    if (albumId) {
+      const findAlbum = await Album.findByPk(albumId);
+      albumExists = findAlbum !== null;
+    }
+
+    if (!albumId || albumExists) {
+      const newSong = await Song.create({
+        userId,
+        title,
+        description,
+        url,
+        imageUrl,
+        albumId: albumId || null,
+      });
+
+      res.status(201).json({ newSong });
+    } else {
+      const err = new Error("Album with the specified albumId not found");
+      err.title = "Album not found";
+      err.errors = "Album not found";
+      err.status = 404;
+      next(err);
+    }
+
+
+    // const findAlbum = await Album.findByPk(albumId);
+    
+    // if (!albumId) {
+    //     albumId = null;
+    //      const newSong = await Song.create({
+    //        userId,
+    //        title,
+    //        description,
+    //        url,
+    //        imageUrl,
+    //        albumId,
+    //      });
+    //      res.status = 201;
+    //      return res.json({ newSong });
+    // }
+
+    // if (findAlbum?.id === albumId) {
+    //     const newSong = await Song.create({
+    //         userId,
+    //         title,
+    //         description,
+    //         url,
+    //         imageUrl,
+    //         albumId
+    //     })
+    //     res.status(201);
+    //     return res.json({newSong});
+    // }
+
+    // const err = new Error(
+    //   "Couldn't find an Album with the specified albumId if albumId is not null"
+    // );
+    // err.title = "Album couldn't be found";
+    // err.errors = "Album couldn't be found";
+    // err.status = 404;
+    // return next(err);
+
+});
+
+
 // GET ALL SONGS
 router.get( '/', async (req, res) => {
     const allSongs = await Song.findAll();
@@ -66,6 +150,8 @@ router.get('/:songId', async (req, res, next) => {
 
     return res.json({Song : songDetail})
 });
+
+
 
 
 module.exports = router;
