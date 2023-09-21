@@ -3,7 +3,8 @@ const router = express.Router();
 const { Song, User, Album } = require('../../db/models')
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
-const { requireAuth } = require('../../utils/auth')
+const { requireAuth } = require('../../utils/auth');
+const {Op} = require('sequelize')
 
 
 const validateSong = [
@@ -36,7 +37,7 @@ router.post("/", requireAuth, validateSong, async (req, res, next) => {
         title,
         description,
         url,
-        imageUrl,
+        imageUrl : imageUrl || 'imagereplace.com',
         albumId: albumId || null,
       });
 
@@ -135,7 +136,7 @@ router.get('/:songId', async (req, res, next) => {
     if (!songId) {
         const err = new Error("Couldn't find a Song with the specified id");
         err.title = "Song couldn't be found";
-        err.erros = "Song couldn't be found";
+        err.errors = "Song couldn't be found";
         err.status = 404;
         return next(err);
     }
@@ -151,6 +152,45 @@ router.get('/:songId', async (req, res, next) => {
     return res.json({Song : songDetail})
 });
 
+
+
+// EDIT A SONG
+router.put('/:songId', requireAuth, validateSong, async (req, res, next) => {
+
+    let {title, description, url, imageUrl, albumId} = req.body;
+    const songId = req.params.songId;
+
+    const editSong = await Song.findOne({
+        where : {
+            [Op.and] : [
+                {userId : req.user.id},
+                {id : songId}
+            ]
+        }
+    })
+
+    if (!editSong) {
+
+        const err = new Error("Couldn't find a Song with the specified id");
+        err.title = "Song couldn't be found";
+        err.errors = "Song couldn't be found";
+        err.status = 404;
+        return next(err);
+
+    }
+
+    await editSong.update({
+        title,
+        description,
+        url,
+        imageUrl : imageUrl || "imagereplace.com",
+        albumId : albumId || null
+    })
+
+    res.status(200);
+    return res.json({editSong});
+
+});
 
 
 
