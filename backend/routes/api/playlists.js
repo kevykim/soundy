@@ -145,6 +145,44 @@ router.put('/:playlistId', requireAuth, playlistValidation, async (req, res, nex
 
 
 
+// DELETE a Playlist
+router.delete('/:playlistId', requireAuth, async (req, res, next) => {
+
+    const userId = req.user.id;
+    const playlistId = req.params.playlistId;
+
+    console.log(userId)
+
+    const deletePlaylist = await Playlist.findOne({
+        where : {
+            [Op.and] : [
+                {id : playlistId},
+                {userId : userId}
+            ]
+        }
+    });
+
+    if (!deletePlaylist) {
+        const err = new Error("Couldn't find a Playlist with the specified id");
+        err.title = "Playlist couldn't be found";
+        err.errors = "Playlist couldn't be found";
+        err.status = 404;
+        return next(err);
+    };
+
+
+    await deletePlaylist.destroy();
+
+    res.status(200);
+    return res.json({
+      message: "Successfully deleted",
+      statusCode: 200,
+    });
+
+});
+
+
+
 
 
 
