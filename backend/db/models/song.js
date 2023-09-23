@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       Song.hasMany(models.Comment, {foreignKey: 'songId', onDelete: 'CASCADE', hooks: true});
       Song.belongsTo(models.User, {foreignKey: 'userId', as: 'Artist'});
       Song.belongsTo(models.Album, {foreignKey: 'albumId'});
-      Song.belongsToMany(models.Playlist, {through: models.PlaylistSong});
+      Song.belongsToMany(models.Playlist, {through: models.PlaylistSong, foreignKey: 'songId'});
       // Song.hasMany(models.PlaylistSong, { foreignKey: 'songId', onDelete: 'CASCADE'})
     }
   }

@@ -75,13 +75,32 @@ router.post('/:playlistId/songs', requireAuth, async (req, res, next) => {
         err.status = 403;
         return next(err)
     }
-      
-
-
-    
+});
 
 
 
+// GET details of playlist from ID
+router.get('/:playlistId', async (req, res, next) => {
+
+    const playlistId = req.params.playlistId;
+
+    const playlistDetails = await Playlist.findOne({
+        where : {id : playlistId},
+        include : [{model : Song, 
+                through : {attributes : []}
+                }]
+    })
+
+    if (!playlistDetails) {
+        const err = new Error("Couldn't find a Playlist with the specified id");
+        err.title = "Playlist couldn't be found";
+        err.errors = "Playlist couldn't be found";
+        err.status = 404;
+        return next(err);
+    }
+
+    res.status(200)
+    return res.json(playlistDetails);
 
 });
 
