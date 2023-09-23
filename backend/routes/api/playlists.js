@@ -79,6 +79,33 @@ router.post('/:playlistId/songs', requireAuth, async (req, res, next) => {
 
 
 
+// GET all playlists created by current user
+router.get('/current', requireAuth, async (req, res, next) => {
+
+    const currentUser = req.user.id;
+
+
+
+    const currentPlaylist = await Playlist.findAll({
+        where : { userId : currentUser}
+    });
+
+
+    if (!currentPlaylist) {
+     const err = new Error("Must be owner of Playlist");
+     err.title = "Must be owner";
+     err.errors = "Must be owner";
+     err.status = 403;
+     return next(err);
+    }
+
+    res.status(200);
+    return res.json(currentPlaylist);
+
+});
+
+
+
 // GET details of playlist from ID
 router.get('/:playlistId', async (req, res, next) => {
 
