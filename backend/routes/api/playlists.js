@@ -106,6 +106,44 @@ router.get('/:playlistId', async (req, res, next) => {
 
 
 
+// EDIT a Playlist
+router.put('/:playlistId', requireAuth, playlistValidation, async (req, res, next) => {
+
+    const {name, imageUrl} = req.body;
+    const playlistId = req.params.playlistId;
+    const userId = req.user.id;
+
+    const findPlaylist = await Playlist.findOne({
+        where : {
+            [Op.and] : [
+                {userId : userId},
+                {id : playlistId}
+            ]
+        }
+
+    });
+
+    if (!findPlaylist) {
+        const err = new Error("Couldn't find a Playlist with the specified id");
+        err.title = "Playlist couldn't be found";
+        err.errors = "Playlist couldn't be found";
+        err.status = 404;
+        return next(err);
+    };
+    
+    const editPlaylist = await findPlaylist.update({
+            name,
+            imageUrl : imageUrl || 'imagereplace.com'
+    });
+
+    res.status(200);
+    return res.json(editPlaylist)
+
+
+
+}); 
+
+
 
 
 
