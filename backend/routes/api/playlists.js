@@ -79,6 +79,33 @@ router.post('/:playlistId/songs', requireAuth, async (req, res, next) => {
 
 
 
+// GET all playlists created by current user
+router.get('/current', requireAuth, async (req, res, next) => {
+
+    const currentUser = req.user.id;
+
+
+
+    const currentPlaylist = await Playlist.findAll({
+        where : { userId : currentUser}
+    });
+
+
+    if (!currentPlaylist) {
+     const err = new Error("Must be owner of Playlist");
+     err.title = "Must be owner";
+     err.errors = "Must be owner";
+     err.status = 403;
+     return next(err);
+    }
+
+    res.status(200);
+    return res.json(currentPlaylist);
+
+});
+
+
+
 // GET details of playlist from ID
 router.get('/:playlistId', async (req, res, next) => {
 
@@ -104,6 +131,82 @@ router.get('/:playlistId', async (req, res, next) => {
 
 });
 
+
+
+// EDIT a Playlist
+router.put('/:playlistId', requireAuth, playlistValidation, async (req, res, next) => {
+
+    const {name, imageUrl} = req.body;
+    const playlistId = req.params.playlistId;
+    const userId = req.user.id;
+
+    const findPlaylist = await Playlist.findOne({
+        where : {
+            [Op.and] : [
+                {userId : userId},
+                {id : playlistId}
+            ]
+        }
+
+    });
+
+    if (!findPlaylist) {
+        const err = new Error("Couldn't find a Playlist with the specified id");
+        err.title = "Playlist couldn't be found";
+        err.errors = "Playlist couldn't be found";
+        err.status = 404;
+        return next(err);
+    };
+    
+    const editPlaylist = await findPlaylist.update({
+            name,
+            imageUrl : imageUrl || 'imagereplace.com'
+    });
+
+    res.status(200);
+    return res.json(editPlaylist)
+
+
+
+}); 
+
+
+
+// DELETE a Playlist
+router.delete('/:playlistId', requireAuth, async (req, res, next) => {
+
+    const userId = req.user.id;
+    const playlistId = req.params.playlistId;
+
+    console.log(userId)
+
+    const deletePlaylist = await Playlist.findOne({
+        where : {
+            [Op.and] : [
+                {id : playlistId},
+                {userId : userId}
+            ]
+        }
+    });
+
+    if (!deletePlaylist) {
+        const err = new Error("Couldn't find a Playlist with the specified id");
+        err.title = "Playlist couldn't be found";
+        err.errors = "Playlist couldn't be found";
+        err.status = 404;
+        return next(err);
+    };
+
+
+    await deletePlaylist.destroy();
+
+    res.status(200);
+    return res.json({
+      message: "Successfully deleted",
+      statusCode: 200,
+    });
+
+});
 
 
 
