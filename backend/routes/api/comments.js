@@ -22,8 +22,13 @@ router.put('/:commentId', requireAuth, validateComment, async (req, res, next) =
     const { body } = req.body;
     const commentId = req.params.commentId;
 
-    const findComment = await Comment.findByPk(commentId, {
-        where : { userId : req.user.id}
+    const findComment = await Comment.findOne({
+         where : {
+            [Op.and] : [
+                {userId : req.user.id},
+                {id : commentId}
+            ]
+        }
     });
 
 
@@ -54,8 +59,13 @@ router.delete('/:commentId', requireAuth, async (req, res, next) => {
     const userId = req.user.id;
     const commentId = req.params.commentId;
 
-    const deleteComment = await Comment.findByPk(commentId, {
-        where : {userId : userId}
+    const deleteComment = await Comment.findOne({
+         where : {
+            [Op.and] : [
+                {id : commentId},
+                {userId : userId}
+            ]
+        }
     });
 
     if (deleteComment) {
