@@ -48,6 +48,36 @@ router.put('/:commentId', requireAuth, validateComment, async (req, res, next) =
 
 
 
+// DELETE a COMMENT
+router.delete('/:commentId', requireAuth, async (req, res, next) => {
+
+    const userId = req.user.id;
+    const commentId = req.params.commentId;
+
+    const deleteComment = await Comment.findByPk(commentId, {
+        where : {userId : userId}
+    });
+
+    if (deleteComment) {
+        await deleteComment.destroy();
+
+        res.status(200);
+        return res.json({
+            message : "Successfully deleted",
+            statusCode : 200
+        });
+    } else {
+        const err = new Error("Couldn't find a Comment with the specified id");
+        err.title = "Comment couldn't be found";
+        err.errors = "Comment couldn't be found";
+        err.status = 404;
+        return next(err)
+    }
+
+});
+
+
+
 
 
 
