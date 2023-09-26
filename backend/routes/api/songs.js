@@ -17,6 +17,13 @@ check("url")
 handleValidationErrors,
 ];
 
+const validateComment = [
+check("body")
+    .exists({checkFalsy: true})
+    .withMessage("Comment body text is required"),
+    handleValidationErrors
+];  
+
 
 // CREATE A SONG
 router.post("/", requireAuth, validateSong, async (req, res, next) => {
@@ -87,6 +94,41 @@ router.post("/", requireAuth, validateSong, async (req, res, next) => {
     // err.errors = "Album couldn't be found";
     // err.status = 404;
     // return next(err);
+
+});
+
+
+// CREATE comment for song based on song ID
+router.post('/:songId/comments', requireAuth, validateComment, async (req, res, next) => {
+
+    const songId = req.params.songId;
+    const { body } = req.body;
+
+    const findSong = await Song.findByPk( songId, {
+             where : {userId : req.user.id}
+    })
+
+    const realSongId = Number(songId)
+    
+    if (findSong) {
+        const newComment = await Comment.create({
+            userId : req.user.id,
+            songId : realSongId,
+            body
+        })
+        res.status(200)
+        return res.json(newComment)
+    } else {
+        const err = new Error("Couldn't find a Song with the specified id");
+        err.title = "Song couldn't be found";
+        err.errors = "Song couldn't be found";
+        err.status = 404;
+        return next(err)
+    }
+
+
+
+
 
 });
 
