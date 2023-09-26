@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Song, User, Album } = require('../../db/models')
+const { Song, User, Album, Comment } = require('../../db/models')
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 const { requireAuth } = require('../../utils/auth');
@@ -89,6 +89,38 @@ router.post("/", requireAuth, validateSong, async (req, res, next) => {
     // return next(err);
 
 });
+
+
+
+// GET all COMMENTS by SONG ID
+router.get('/:songId/comments', async (req, res, next) => {
+
+    const songId = req.params.songId;
+
+    const allComments = await Comment.findAll({
+        where : {
+            songId : songId
+        },
+        include : [
+            {model: User, attributes : ['id', 'username']}
+        ]
+    });
+
+
+
+    if (!allComments || allComments.length === 0) {
+        const err = new Error("Couldn't find a Song with the specified id");
+        err.title = "Song couldn't be found";
+        err.errors = "Song couldn't be found";
+        err.status = 404;
+        return next(err)
+    }
+
+    res.status(200);
+    return res.json(allComments);
+
+});
+
 
 
 // GET ALL SONGS
