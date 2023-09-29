@@ -6,6 +6,7 @@ import App from './App'
 import configureStore from "./store";
 import * as sessionActions from './store/session';
 import { restoreCSRF, csrfFetch } from "./store/csrf";
+import { ModalProvider } from "./context/Modal"
 import "./index.css";
 
 declare global {
@@ -32,9 +33,11 @@ export type AppDispatch = typeof store.dispatch
 function Root() {
   return (
     <Provider store={store}>
+        <ModalProvider >
         <BrowserRouter>
           <App />
         </BrowserRouter>
+        </ModalProvider>
     </Provider>
   );
 }
