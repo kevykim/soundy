@@ -1,16 +1,6 @@
 import { csrfFetch } from "./csrf";
 import { AppDispatch } from "../root";
 
-interface songPayload {
-    id : number
-    title : string
-    description : string
-    url : string
-    imageUrl : string
-    userId : number
-    albumId : number
-}
-
 // types
 const createSong = '/songs/createSong'
 const createComment = '/songs/createComment'

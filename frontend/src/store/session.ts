@@ -1,19 +1,7 @@
 import { AppDispatch } from "../root";
 import { csrfFetch } from "./csrf";
 
-interface User {
-  credential? : string
-  password? : string
-  email? : string
-  username? : string
-  firstName? : string
-  lastName? : string
-}
 
-interface Action {
-  type? : string
-  payload? : string | number
-}
 
 
 const SET_USER = "session/setUser";
