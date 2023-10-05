@@ -3,10 +3,18 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger'
 import sessionReducer from './session';
 import songReducer from './songs';
+import commentReducer from './comments';
+import playlistReducer from './playlists';
+import albumReducer from './albums';
+import artistReducer from './artists';
 
 const rootReducer = combineReducers({
   session : sessionReducer,
-  songs : songReducer
+  songs : songReducer,
+  comments : commentReducer,
+  playlists : playlistReducer,
+  albums : albumReducer,
+  artists : artistReducer,
 });
 
 
