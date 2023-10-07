@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './profileButton';
 import LoginFormModal from '../LoginModal';
+import SignUpModal from '../SignUpModal.ts';
 
 type UserType = {
     username : string
@@ -29,20 +30,20 @@ function Navigation({ isLoaded } : NavigationProps){
     );
   } else {
     sessionLinks = (
-      <>
+      <div className='flex flex-row justify-between w-48'>
         <LoginFormModal />
-        <NavLink to="/signup">Sign Up</NavLink>
-      </>
+        <SignUpModal />
+      </div>
     );
   }
 
   return (
-    <ul>
-      <li>
-        <NavLink to="/">Home</NavLink>
+    <div className=' bg-black p-5' >
+      <div className=' text-white flex flex-row justify-between '>
+        <NavLink className='p-2' to="/">Home</NavLink>
         {isLoaded && sessionLinks}
-      </li>
-    </ul>
+      </div>
+    </div>
   );
 }
 

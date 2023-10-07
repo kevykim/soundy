@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import { Modal } from '../../context/Modal';
-import LoginFormPage from '../LoginFormPage';
+import SignupFormPage from '../SignUpPage';
 
-function LoginFormModal() {
+function SignUpModal() {
   const [showModal, setShowModal] = useState(false);
 
   return (
     <>
-      <button onClick={() => setShowModal(true)}>Sign In</button>
+      <button className='bg-orange-500 rounded-md p-2' onClick={() => setShowModal(true)}>Create Account</button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <LoginFormPage />
+          <SignupFormPage />
         </Modal>
       )}
     </>
   );
 }
 
-export default LoginFormModal;
+export default SignUpModal;
