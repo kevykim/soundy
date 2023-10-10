@@ -223,7 +223,7 @@ router.get('/:songId', async (req, res, next) => {
                 }],
     })
 
-    return res.json({Song : songDetail})
+    return res.json(songDetail)
 });
 
 
