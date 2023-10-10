@@ -129,7 +129,7 @@ export const thunk_getCurrentUserSongs = () => async (dispatch : any) => {
 }
 
 
-export const thunk_getASong = (id : number) => async (dispatch : any) => {
+export const thunk_getASong = (id : string) => async (dispatch : any) => {
     const response = await csrfFetch(`/api/songs/${id}`)
 
     if (response.ok) {
@@ -167,7 +167,7 @@ export const thunk_deleteSong = (id : number) => async (dispatch : any) => {
 const initialState = {};
 
 const songReducer = (state = initialState, action : any) => {
-let newState : any;
+let newState : any = {...state};
 switch(action.type) {
     case createSong:
         newState[action.songs.id] = action.songs
@@ -194,6 +194,7 @@ switch(action.type) {
          })
          return newState
     case getASong:
+        newState = {};
          newState[action.songs.id] = action.songs
          return newState
     case editSong:
