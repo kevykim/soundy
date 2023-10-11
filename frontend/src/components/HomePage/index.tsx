@@ -8,6 +8,7 @@ import LoginFormModal from "../LoginModal";
 interface songInterface {
     id : number
     imageUrl : string
+    userId : number
 }
 
 
@@ -17,7 +18,8 @@ function HomePage () {
 
 
   const songs = useSelector((state : any) => state.songs)
-    const allSongs : songInterface[] = Object.values(songs)
+  const allSongs : songInterface[] = Object.values(songs)
+  const currentUserSongs = allSongs.filter((song) => song?.userId === loggedIn?.id)
 
 
 useEffect(() => {
@@ -26,8 +28,8 @@ useEffect(() => {
 
     return (
         <div className="flex flex-col items-center justify-center h-screen">
-        {!loggedIn ?  <div className="flex flex-col items-center justify-center">
             <div>Image Place holder</div>
+        {!loggedIn ?  <div className="flex flex-col items-center justify-center">
             <div> Hear what's trending for free</div>
                 <div className="flex flex-wrap justify-between ">
             {allSongs.map((song : songInterface) => <div key={song.id}>
@@ -51,8 +53,12 @@ useEffect(() => {
                         </div>
                     </div>
             </div>
-            : <div>
-                {/* once a user is logged in see only their playlists */}
+            : <div className="flex flex-wrap justify-between">
+                {currentUserSongs.map((song : songInterface) => <div key={song.id}>
+                    <NavLink to={`/songs/${song.id}`}>
+                <img className="w-48 h-48 p-1" src={song.imageUrl} alt="song_image"  ></img>
+                    </NavLink>
+                </div>)}
 
             </div>}
             <footer> About us ETC ETC ETC</footer>
