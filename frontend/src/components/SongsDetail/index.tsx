@@ -12,7 +12,7 @@ function SongsDetail() {
 
         useEffect(() => {
             dispatch(thunk_getASong(id));
-        },[dispatch]);
+        },[dispatch, id]);
 
 
 
@@ -25,7 +25,7 @@ function SongsDetail() {
                 </div>
                 <div className="flex flex-col">
                     <h1>{findSong.title}</h1>
-                    <h2>{findSong.Artist.username}</h2>
+                    <h2>{findSong.Artist?.username}</h2>
                 </div>
             </div>
             <img className="w-80 h-80" src={findSong.imageUrl}></img>

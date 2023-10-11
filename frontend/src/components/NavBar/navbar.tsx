@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import ProfileButton from './profileButton';
 import LoginFormModal from '../LoginModal';
 import SignUpModal from '../SignUpModal.ts';
+import UploadModal from '../LoginModal/upload.tsx';
 
 type UserType = {
     username : string
@@ -26,13 +27,19 @@ function Navigation({ isLoaded } : NavigationProps){
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <ProfileButton user={sessionUser} />
+      <div className='flex flex-row justify-between w-20'>
+       <NavLink to='/upload' className='flex flex-col justify-center'>Upload</NavLink>
+        <ProfileButton user={sessionUser} />
+      </div>
+
     );
   } else {
     sessionLinks = (
-      <div className='flex flex-row justify-between w-48'>
+      <div className='flex flex-row justify-between w-60'>
         <LoginFormModal />
         <SignUpModal />
+        {!sessionUser ? <UploadModal /> : <NavLink to='/upload' className='flex flex-col justify-center'>upload</NavLink>}
+        
       </div>
     );
   }
