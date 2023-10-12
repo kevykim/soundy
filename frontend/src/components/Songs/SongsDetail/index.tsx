@@ -1,7 +1,8 @@
+import React from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { thunk_getASong } from "../../store/songs";
+import { thunk_getASong } from "../../../store/songs";
 
 
 function SongsDetail() {

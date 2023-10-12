@@ -10,10 +10,10 @@ import LoginFormPage from './components/LoginFormPage';
 import HomePage from './components/HomePage';
 import SignupFormPage from './components/SignUpPage';
 import Navigation from './components/NavBar/navbar';
-import SongsDetail from './components/SongsDetail';
-import UploadSong from './components/UploadSong';
-import YourTracks from './components/Yourtracks';
-import EditTracks from './components/EditTracks';
+import SongsDetail from './components/Songs/SongsDetail';
+import UploadSong from './components/Songs/UploadSong';
+import YourTracks from './components/Songs/Yourtracks';
+import EditTracks from './components/Songs/EditTracks';
 
 function App() {
 

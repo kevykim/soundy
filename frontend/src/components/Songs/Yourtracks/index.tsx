@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunk_getCurrentUserSongs } from "../../store/songs";
+import { thunk_getCurrentUserSongs } from "../../../store/songs";
 import { NavLink } from "react-router-dom";
 import DeleteModal from "../DeleteTrack";
 
