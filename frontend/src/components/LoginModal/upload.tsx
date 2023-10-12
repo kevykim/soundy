@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { Modal } from '../../context/Modal';
 import LoginFormPage from '../LoginFormPage';
 
-function LoginFormModal() {
+function UploadModal() {
   const [showModal, setShowModal] = useState(false);
 
+  
   return (
     <>
-      <button onClick={() => setShowModal(true)}>Sign In</button>
+      <button onClick={() => setShowModal(true)}>Upload</button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           <LoginFormPage />
@@ -17,4 +18,4 @@ function LoginFormModal() {
   );
 }
 
-export default LoginFormModal;
+export default UploadModal;

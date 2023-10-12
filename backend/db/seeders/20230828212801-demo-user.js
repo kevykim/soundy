@@ -8,19 +8,22 @@ const userArr = [
     email: "demo@user.io",
     username: "Demo-lition",
     hashedPassword: bcrypt.hashSync("password"),
-    profileImg: "image.com",
+    profileImg:
+      "https://cdn1.iconfinder.com/data/icons/user-pictures/101/malecostume-512.png",
   },
   {
     email: "user1@user.io",
     username: "FakeUser1",
     hashedPassword: bcrypt.hashSync("password2"),
-    profileImg: "image.com",
+    profileImg:
+      "https://cdn1.iconfinder.com/data/icons/user-pictures/100/female1-512.png",
   },
   {
     email: "user2@user.io",
     username: "FakeUser2",
     hashedPassword: bcrypt.hashSync("password3"),
-    profileImg: "image.com",
+    profileImg:
+      "https://cdn1.iconfinder.com/data/icons/user-pictures/100/boy-512.png",
   },
 ];
 

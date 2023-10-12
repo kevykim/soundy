@@ -44,11 +44,11 @@ router.post("/", requireAuth, validateSong, async (req, res, next) => {
         title,
         description,
         url,
-        imageUrl : imageUrl || 'imagereplace.com',
+        imageUrl : imageUrl || 'https://cdn2.iconfinder.com/data/icons/picol-vector/32/document_music_information-512.png',
         albumId: albumId || null,
       });
 
-      res.status(201).json({ newSong });
+      res.status(201).json( newSong );
     } else {
       const err = new Error("Album with the specified albumId not found");
       err.title = "Album not found";
@@ -196,7 +196,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         where: { userId: currentUser}
     })
 
-    return res.json({Songs : currentSongs})
+    return res.json(currentSongs)
 
 });
 
@@ -223,7 +223,7 @@ router.get('/:songId', async (req, res, next) => {
                 }],
     })
 
-    return res.json({Song : songDetail})
+    return res.json(songDetail)
 });
 
 
