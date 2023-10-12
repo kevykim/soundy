@@ -196,7 +196,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         where: { userId: currentUser}
     })
 
-    return res.json({Songs : currentSongs})
+    return res.json(currentSongs)
 
 });
 

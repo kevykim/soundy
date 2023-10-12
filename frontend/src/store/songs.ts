@@ -120,11 +120,11 @@ export const thunk_getAllSongs = () => async (dispatch : any) => {
 
 
 export const thunk_getCurrentUserSongs = () => async (dispatch : any) => {
-    const response = await csrfFetch('/api/current')
+    const response = await csrfFetch('/api/songs/current')
 
     if (response.ok) {
         const data = await response.json()
-        dispatch(get_currentuser_songs(data.Songs))
+        dispatch(get_currentuser_songs(data))
     }
 }
 

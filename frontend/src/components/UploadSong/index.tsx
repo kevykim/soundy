@@ -27,8 +27,8 @@ function UploadSong() {
     return (
         <>
             <div className="flex flex-row p-2 justify-between w-60">
-                <NavLink to='/upload'>upload</NavLink>
-                <NavLink to='/yours'>Your songs</NavLink>
+                <NavLink to='/upload'>Upload</NavLink>
+                <NavLink to='/tracks'>Your tracks</NavLink>
                 <NavLink to='/albums'>Albums</NavLink>
             </div>
         <div className="flex flex-col justify-center items-center h-screen">
