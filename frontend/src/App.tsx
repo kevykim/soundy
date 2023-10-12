@@ -12,6 +12,8 @@ import SignupFormPage from './components/SignUpPage';
 import Navigation from './components/NavBar/navbar';
 import SongsDetail from './components/SongsDetail';
 import UploadSong from './components/UploadSong';
+import YourTracks from './components/Yourtracks';
+import EditTracks from './components/EditTracks';
 
 function App() {
 
@@ -32,6 +34,8 @@ function App() {
         <Route path='/signup' element={<SignupFormPage />} />
         <Route path='/songs/:id' element={<SongsDetail />} />
         <Route path='/upload' element={<UploadSong />} />
+        <Route path='/tracks' element={<YourTracks />}/>
+        <Route path='/songs/:id/edit' element={<EditTracks />}/>
      </Routes>
      )}    
     </>
