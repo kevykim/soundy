@@ -9,7 +9,8 @@ const songArr = [
     title: "You're Not You Anymore",
     description: "Metal",
     url: "music.com",
-    imageUrl: "image.com",
+    imageUrl:
+      "https://images.pexels.com/photos/1713953/pexels-photo-1713953.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
   {
     userId: 2,
@@ -17,7 +18,8 @@ const songArr = [
     title: "Nothing Left To Love",
     description: "Metal",
     url: "music.com",
-    imageUrl: "image.com",
+    imageUrl:
+      "https://images.pexels.com/photos/1713953/pexels-photo-1713953.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
   {
     userId: 3,
@@ -25,7 +27,8 @@ const songArr = [
     title: "Whispers of Your Death",
     description: "Metal",
     url: "music.com",
-    imageUrl: "image.com",
+    imageUrl:
+      "https://images.pexels.com/photos/1713953/pexels-photo-1713953.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
 ];
 

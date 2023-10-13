@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Song, User, Album } = require('../../db/models')
+const { Song, User, Album, Comment } = require('../../db/models')
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 const { requireAuth } = require('../../utils/auth');
@@ -16,6 +16,13 @@ check("url")
     .withMessage('Audio is required'),
 handleValidationErrors,
 ];
+
+const validateComment = [
+check("body")
+    .exists({checkFalsy: true})
+    .withMessage("Comment body text is required"),
+    handleValidationErrors
+];  
 
 
 // CREATE A SONG
@@ -37,11 +44,11 @@ router.post("/", requireAuth, validateSong, async (req, res, next) => {
         title,
         description,
         url,
-        imageUrl : imageUrl || 'imagereplace.com',
+        imageUrl : imageUrl || 'https://cdn2.iconfinder.com/data/icons/picol-vector/32/document_music_information-512.png',
         albumId: albumId || null,
       });
 
-      res.status(201).json({ newSong });
+      res.status(201).json( newSong );
     } else {
       const err = new Error("Album with the specified albumId not found");
       err.title = "Album not found";
@@ -91,6 +98,73 @@ router.post("/", requireAuth, validateSong, async (req, res, next) => {
 });
 
 
+// CREATE comment for song based on song ID
+router.post('/:songId/comments', requireAuth, validateComment, async (req, res, next) => {
+
+    const songId = req.params.songId;
+    const { body } = req.body;
+
+    const findSong = await Song.findByPk( songId, {
+             where : {userId : req.user.id}
+    })
+
+    const realSongId = Number(songId)
+    
+    if (findSong) {
+        const newComment = await Comment.create({
+            userId : req.user.id,
+            songId : realSongId,
+            body
+        })
+        res.status(200)
+        return res.json(newComment)
+    } else {
+        const err = new Error("Couldn't find a Song with the specified id");
+        err.title = "Song couldn't be found";
+        err.errors = "Song couldn't be found";
+        err.status = 404;
+        return next(err)
+    }
+
+
+
+
+
+});
+
+
+
+// GET all COMMENTS by SONG ID
+router.get('/:songId/comments', async (req, res, next) => {
+
+    const songId = req.params.songId;
+
+    const allComments = await Comment.findAll({
+        where : {
+            songId : songId
+        },
+        include : [
+            {model: User, attributes : ['id', 'username']}
+        ]
+    });
+
+
+
+    if (!allComments || allComments.length === 0) {
+        const err = new Error("Couldn't find a Song with the specified id");
+        err.title = "Song couldn't be found";
+        err.errors = "Song couldn't be found";
+        err.status = 404;
+        return next(err)
+    }
+
+    res.status(200);
+    return res.json(allComments);
+
+});
+
+
+
 // GET ALL SONGS
 router.get( '/', async (req, res) => {
     const allSongs = await Song.findAll();
@@ -122,7 +196,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         where: { userId: currentUser}
     })
 
-    return res.json({Songs : currentSongs})
+    return res.json(currentSongs)
 
 });
 
@@ -149,7 +223,7 @@ router.get('/:songId', async (req, res, next) => {
                 }],
     })
 
-    return res.json({Song : songDetail})
+    return res.json(songDetail)
 });
 
 
