@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Modal } from '../../../context/Modal';
 import { useDispatch } from 'react-redux';
 import { thunk_deleteSong } from '../../../store/songs';
+import React from 'react';
 
 
 function DeleteModal({id}) {
