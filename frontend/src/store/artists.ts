@@ -79,7 +79,7 @@ export const thunk_getArtistAlbums = (payload : artistPayload) => async (dispatc
 
 const initialState = {}
 const artistReducer = (state = initialState, action : any) => {
-    let newState : any;
+    let newState : any = {...state};
     switch (action.type) {
         case getArtist:
             newState[action.artists.id] = action.artists

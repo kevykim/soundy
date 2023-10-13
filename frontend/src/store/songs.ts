@@ -3,8 +3,6 @@ import { AppDispatch } from "../root";
 
 // types
 const createSong = '/songs/createSong'
-const createComment = '/songs/createComment'
-const getAllComments = '/songs/getAllComments'
 const getAllSongs = '/songs/getAllSongs'
 const getCurrentUserSongs = '/songs/getCurrentUserSongs'
 const getASong = '/songs/getASong'
@@ -15,20 +13,6 @@ const deleteSong = '/songs/deleteSong'
 const create_song = (songs : string) => {
     return {
         type : createSong,
-        songs
-    }
-};
-
-const create_comment = (songs : string) => {
-    return {
-        type : createComment,
-        songs
-    }
-};
-
-const get_all_comments = (songs : string) => {
-    return {
-        type : getAllComments,
         songs
     }
 };
@@ -84,30 +68,6 @@ export const thunk_createSong = (payload : string) => async (dispatch : AppDispa
     }
 };
 
-
-export const thunk_createComment = (payload : any) => async (dispatch : AppDispatch) => {
-    const response = await csrfFetch(`/api/songs/${payload.id}/comments`, {
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify(payload)
-    })
-
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(create_comment(data))
-        return data;
-    }
-}
-
-
-export const thunk_getAllComments = (songId : number) => async (dispatch : AppDispatch) => {
-    const response = await csrfFetch(`/api/songs/${songId}/comments`)
-
-    if (response.ok) {
-        const data = await response.json()
-        dispatch(get_all_comments(data))
-    }
-}
 
 // why does AppDispatch interface not work? 
 export const thunk_getAllSongs = () => async (dispatch : any) => {
@@ -172,15 +132,6 @@ switch(action.type) {
     case createSong:
         newState[action.songs.id] = action.songs
         return newState
-    case createComment: 
-        newState[action.songs.id] = action.songs
-        return newState
-    case getAllComments:
-         newState = {}
-            action.songs.forEach((songs : any) => {
-                newState[songs.id] = songs
-            })
-            return newState
     case getAllSongs:
          newState = {}
          action.songs.forEach((songs : any) => {

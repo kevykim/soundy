@@ -129,7 +129,7 @@ export const thunk_deletePlaylist = (id : number) => async (dispatch : any) => {
 
 const initialState = {};
 const playlistReducer = (state = initialState, action : any) => {
-    let newState : undefined | any;
+    let newState : undefined | any = {...state};
     switch (action.type) {
         case createPlaylist:
             newState[action.playlists.id] = action.playlists
