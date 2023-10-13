@@ -5,6 +5,8 @@ import { useEffect} from "react";
 import { thunk_getASong } from "../../../store/songs";
 import { thunk_getAllComments } from "../../../store/comments";
 import CreateComment from "../../Comments/CreateComment";
+import EditComment from "../../Comments/EditComment";
+import DeleteComment from "../../Comments/DeleteComment";
 
 function SongsDetail() {
         const dispatch = useDispatch();
@@ -47,12 +49,14 @@ function SongsDetail() {
             <div>
             <div>{allComments.length} comments</div>
             {allComments.map((comments) => 
-            <div key={comments.id}>
-                <div>
-                    <div>{comments.User?.username}</div>
+            <div className="flex flex-row" key={comments.id}>
+                <div className="flex flex-col">
+                    <div>{comments?.User?.username}</div>
                     <div>{comments.body}</div>
-                    <div>{comments.createdAt}</div>
                 </div>
+                    <div>{comments.createdAt}</div>
+                <EditComment username={comments?.User?.username} songId={id} commentId={comments.id} body={comments.body}  />
+                <DeleteComment id={comments.id} />
             </div>)}
             </div>
         </div>
