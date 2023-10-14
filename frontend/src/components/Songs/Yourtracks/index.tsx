@@ -5,7 +5,12 @@ import { NavLink } from "react-router-dom";
 import DeleteModal from "../DeleteTrack";
 import React from "react";
 
+interface SongInt {
+    title : string
+    imageUrl : string
+    id : string
 
+}
 
 
 function YourTracks() {
@@ -29,7 +34,7 @@ useEffect(() => {
         <div>
             <h1>Your tracks</h1>
             <div className="flex flex-col">
-                {currentsongs.map((song) => <div className="flex flex-row" key={song.id}>
+                {(currentsongs as SongInt[]).map((song : SongInt) => <div className="flex flex-row" key={song.id}>
                     <div>{song.title}</div>
                     <img className="w-24 h-24" src={song.imageUrl}></img>
                     <div>

@@ -7,6 +7,18 @@ import { thunk_getAllComments } from "../../../store/comments";
 import CreateComment from "../../Comments/CreateComment";
 import EditComment from "../../Comments/EditComment";
 import DeleteComment from "../../Comments/DeleteComment";
+import CommentModal from "../../LoginModal/comment";
+
+type User = {
+    username : string
+}
+interface commentsInt {
+    id : number,
+    body : string,
+    createdAt : string,
+    User : User
+}
+
 
 function SongsDetail() {
         const dispatch = useDispatch();
@@ -17,8 +29,7 @@ function SongsDetail() {
         const findSong = useSelector((state : any) => state.songs[id])
 
         const findComments = useSelector((state : any) => state.comments)
-        const allComments = Object.values(findComments)
-
+        const allComments : commentsInt[] = Object.values(findComments)
 
 
         useEffect(() => {
@@ -40,7 +51,12 @@ function SongsDetail() {
             </div>
             <img className="w-80 h-80" src={findSong?.imageUrl}></img>
         </div>
-        < CreateComment findSong={findSong} songId={id} userId={sessionUser?.id} />
+        {!sessionUser ? (
+        <div className="bg-gray-200 p-1">
+            <CommentModal />
+        </div>) :
+         (sessionUser && sessionUser?.id !== findSong?.userId) && 
+         (< CreateComment findSong={findSong} songId={id} userId={sessionUser?.id} username={sessionUser?.username}/>)}
         <div>add playlist button</div>
         <div className="flex flex-row">
             <div className="p-2">
@@ -48,7 +64,7 @@ function SongsDetail() {
             </div>
             <div>
             <div>{allComments.length} comments</div>
-            {allComments.map((comments) => 
+            {allComments.map((comments : commentsInt) => 
             <div className="flex flex-row" key={comments.id}>
                 <div className="flex flex-col">
                     <div>{comments?.User?.username}</div>

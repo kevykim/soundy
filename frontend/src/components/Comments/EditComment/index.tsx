@@ -11,13 +11,13 @@ function EditComment ({username, songId, commentId, body}) {
     const [submitted, setSubmitted] = useState(false)
     
 
-    const updateComment = (event) => {
+    const updateComment = (event : React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
         setShowForm(!showForm)
     }
 
-    const okFunc = (event) => {
+    const okFunc = (event : React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setSubmitted(true);
 
@@ -31,7 +31,7 @@ function EditComment ({username, songId, commentId, body}) {
 
     }
 
-    const cancelFunc = (event) => {
+    const cancelFunc = (event : React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
         setShowForm(false)
