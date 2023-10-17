@@ -5,18 +5,12 @@ import { NavLink } from "react-router-dom";
 import DeleteModal from "../DeleteTrack";
 import React from "react";
 
-interface SongInt {
-    title : string
-    imageUrl : string
-    id : string
-
-}
 
 
 function YourTracks() {
 const dispatch = useDispatch();
 
-const current = useSelector((state) => state.songs)
+const current = useSelector((state : SongSelector ) => state.songs)
 const currentsongs = Object.values(current)
 
 

@@ -6,18 +6,22 @@ import { thunk_editSong } from "../../../store/songs";
 import React from "react";
 
 function EditTracks () {
-    const {id} = useParams();
+    type idType = {
+        id? : string 
+    }
+    
+    const {id} = useParams<idType>();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const currentTrack = useSelector((state) => state.songs[id])
+    const currentTrack = useSelector((state : SongSelector) => state.songs[id])
 
     const {albumId, title, description, url, imageUrl} = currentTrack
 
-    const [editTitle, setTitle] = useState(title);
-    const [editDescription, setDescription] = useState(description);
-    const [editUrl, setUrl] = useState(url);
-    const [editImageUrl, setImageUrl] = useState(imageUrl);
+    const [editTitle, setTitle] = useState<string>(title);
+    const [editDescription, setDescription] = useState<string>(description);
+    const [editUrl, setUrl] = useState<string>(url);
+    const [editImageUrl, setImageUrl] = useState<string>(imageUrl);
     const [submitted, setSubmitted] = useState(false);
 
     const onSubmit = (event : React.FormEvent<HTMLFormElement>) => {

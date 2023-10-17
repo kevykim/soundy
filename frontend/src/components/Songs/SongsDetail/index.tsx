@@ -9,15 +9,8 @@ import EditComment from "../../Comments/EditComment";
 import DeleteComment from "../../Comments/DeleteComment";
 import CommentModal from "../../LoginModal/comment";
 
-type User = {
-    username : string
-}
-interface commentsInt {
-    id : number,
-    body : string,
-    createdAt : string,
-    User : User
-}
+import AudioPlayer from 'react-h5-audio-player'
+import {Icon} from '@iconify/react'
 
 
 function SongsDetail() {
@@ -26,7 +19,7 @@ function SongsDetail() {
 
         const sessionUser = useSelector((state : any) => state.session.user);
 
-        const findSong = useSelector((state : any) => state.songs[id])
+        const findSong = useSelector((state : SongSelector) => state.songs[id])
 
         const findComments = useSelector((state : any) => state.comments)
         const allComments : commentsInt[] = Object.values(findComments)
@@ -42,7 +35,18 @@ function SongsDetail() {
         <div className="h-96 flex flex-row bg-blue-200 justify-between p-5">
             <div className="flex flex-row ">
                 <div>
-                    playbutton
+                    <AudioPlayer 
+                        showJumpControls={false}
+                        showFilledProgress={false}
+                        defaultCurrentTime={false}
+                        defaultDuration={false}
+                        customVolumeControls={[]}
+                        customAdditionalControls={[]}
+                        customIcons={{
+                            play : <Icon icon="carbon:play-filled" color="green" width="70"/>,
+                            pause : <Icon icon="zondicons:pause-solid" color="green" width="70"/>
+                        }}
+                    />
                 </div>
                 <div className="flex flex-col">
                     <h1>{findSong?.title}</h1>
