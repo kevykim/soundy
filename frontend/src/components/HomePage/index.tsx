@@ -5,6 +5,9 @@ import { NavLink } from "react-router-dom";
 import SignUpModal from "../SignUpModal.ts";
 import LoginFormModal from "../LoginModal";
 
+import {Icon} from '@iconify/react'
+
+
 interface songInterface {
     id : number
     imageUrl : string
@@ -33,7 +36,8 @@ useEffect(() => {
             <div> Hear what's trending for free</div>
                 <div className="flex flex-wrap justify-between ">
             {allSongs.map((song : songInterface) => <div key={song.id}>
-                <NavLink to={`/songs/${song.id}`}>
+                <NavLink className="flex flex-col justify-center items-center relative group" to={`/songs/${song.id}`}>
+                <Icon className="absolute hidden group-hover:block justify-center items-center" icon="carbon:play-filled" color="green" width="130"/>
                 <img className="w-48 h-48 p-1" src={song.imageUrl} alt="song_image"  ></img>
                 </NavLink>
             </div>)}
