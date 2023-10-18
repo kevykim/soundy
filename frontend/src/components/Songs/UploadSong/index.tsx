@@ -70,7 +70,7 @@ function UploadSong() {
                value={imageUrl}
                onChange={(event) => setImageUrl(event.target.value)} 
                />
-            <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded" type="submit" >Submit</button>
+            <button className="bg-green-800 hover:bg-green-900 text-white font-bold py-2 px-4 rounded" type="submit" >Submit</button>
         </form>
         </div>
         </>

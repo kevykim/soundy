@@ -37,7 +37,7 @@ useEffect(() => {
                 <div className="flex flex-wrap justify-between ">
             {allSongs.map((song : songInterface) => <div key={song.id}>
                 <NavLink className="flex flex-col justify-center items-center relative group" to={`/songs/${song.id}`}>
-                <Icon className="absolute hidden group-hover:block justify-center items-center" icon="carbon:play-filled" color="green" width="130"/>
+                <Icon className="absolute hidden group-hover:block justify-center items-center" icon="zondicons:play-outline" color="green" width="130"/>
                 <img className="w-48 h-48 p-1" src={song.imageUrl} alt="song_image"  ></img>
                 </NavLink>
             </div>)}
@@ -51,7 +51,7 @@ useEffect(() => {
                             Save tracks, follow artists and build playlists. All for free
                         </div>
                         <SignUpModal />
-                        <div>
+                        <div className="flex flex-row justify-between w-64">
                             <div> Already have an account? </div>
                             <LoginFormModal />
                         </div>

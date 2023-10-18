@@ -7,7 +7,7 @@ function SignUpModal() {
 
   return (
     <>
-      <button className='bg-orange-500 rounded-md p-2 text-white' onClick={() => setShowModal(true)}>Create Account</button>
+      <button className='bg-green-800 hover:bg-green-900 rounded-md p-2 text-white' onClick={() => setShowModal(true)}>Create Account</button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           <SignupFormPage />

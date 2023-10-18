@@ -28,13 +28,14 @@ function SignupFormPage() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="h-96 w-96 flex flex-col border-0 justify-around rounded-m pl-7 pr-7 pt-6 pb-6" onSubmit={handleSubmit}>
       <ul>
         {errors.map((error : string, idx : number) => <li key={idx}>{error}</li>)}
       </ul>
       <label>
         Email
         <input
+          className="form-input w-full rounded-md"
           type="text"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -44,6 +45,7 @@ function SignupFormPage() {
       <label>
         Username
         <input
+          className="form-input w-full rounded-md"
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -53,6 +55,7 @@ function SignupFormPage() {
       <label>
         Password
         <input
+          className="form-password w-full rounded-md"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -62,13 +65,14 @@ function SignupFormPage() {
       <label>
         Confirm Password
         <input
+          className="form-password w-full rounded-md"
           type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
         />
       </label>
-      <button type="submit">Sign Up</button>
+      <button className="h-12 bg-green-800 hover:bg-green-900 text-white rounded-md font-bold" type="submit">Sign Up</button>
     </form>
   );
 }

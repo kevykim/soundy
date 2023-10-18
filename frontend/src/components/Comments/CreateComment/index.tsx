@@ -43,15 +43,15 @@ function CreateComment  ({findSong, songId, userId, username }) {
     }
 
     return (
-         <form onSubmit={onSubmit} className=" z-1 flex flex-row">
-            <img className="w-10 h-10 p-1" src={findSong?.Artist?.profileImg}></img>
+         <form onSubmit={onSubmit} className=" z-1 flex flex-row items-center">
+            <img className="w-12 h-12 p-1" src={findSong?.Artist?.profileImg}></img>
             <div className="p-2">
             <input className="z-2"
              value={body}
              onChange={(event) => setBody(event.target.value)}
              onKeyDown={handleKeyDown}
              placeholder="Write a comment"
-              size={145}
+              size={140}
                type="text"></input>
             </div>
         </form>
