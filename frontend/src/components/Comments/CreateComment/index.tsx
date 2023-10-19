@@ -1,45 +1,57 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React ,{ ReactEventHandler, useState } from "react";
 import { useDispatch } from "react-redux";
 import { thunk_createComment, thunk_getAllComments } from "../../../store/comments";
 
-function CreateComment ({findSong, songId, userId }) {
+// interface CreateCommentProps {
+//   findSong : string,
+//   songId : number,
+//   userId : number, 
+//   username : string
+// }
+
+function CreateComment  ({findSong, songId, userId, username }) {
     const dispatch = useDispatch();
     const [body, setBody] = useState('');
 
-    const submitComment = (event) => {
-        event.preventDefault();
+    const submitComment = async () => {
         
-        return dispatch(thunk_createComment({
+        await dispatch(thunk_createComment({
+            User : {username},
             songId,
             userId,
             body,
         }))
-    }
 
-    useEffect(() => {
-        dispatch(thunk_getAllComments(songId))
-    },[dispatch, songId])
+       await dispatch(thunk_getAllComments(songId))
+
+    }
 
 
     
-    const handleKeyDown = (event) => {
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      submitComment(event);
+      event.preventDefault();
+      submitComment();
       setBody('');
     }
   };
 
+    const onSubmit = ( event : React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      submitComment();
+      setBody('');
+    }
+
     return (
-         <form onSubmit={submitComment} className="bg-gray-200 z-1 flex flex-row">
-            <img className="w-10 h-10 p-1" src={findSong?.Artist?.profileImg}></img>
+         <form onSubmit={onSubmit} className=" z-1 flex flex-row items-center">
+            <img className="w-12 h-12 p-1" src={findSong?.Artist?.profileImg}></img>
             <div className="p-2">
             <input className="z-2"
              value={body}
              onChange={(event) => setBody(event.target.value)}
              onKeyDown={handleKeyDown}
              placeholder="Write a comment"
-              size={145}
+              size={140}
                type="text"></input>
             </div>
         </form>

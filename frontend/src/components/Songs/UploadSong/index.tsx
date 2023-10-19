@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { thunk_createSong } from "../../../store/songs";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import React from "react";
 
 
 function UploadSong() {
-    const dispatch = useDispatch();
-    // const sessionUser = useSelector((state : any) => state.session.user);
+    const dispatch : any = useDispatch();
+    const navigate = useNavigate();
+    const sessionUser = useSelector((state : any) => state.session.user);
+    
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [url, setUrl] = useState('');
@@ -23,6 +25,12 @@ function UploadSong() {
         
     }
 
+
+    useEffect(() => {
+        if (!sessionUser) {
+            navigate('/')
+        }
+    },[navigate, sessionUser])
 
 
     return (
@@ -62,7 +70,7 @@ function UploadSong() {
                value={imageUrl}
                onChange={(event) => setImageUrl(event.target.value)} 
                />
-            <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded" type="submit" >Submit</button>
+            <button className="bg-green-800 hover:bg-green-900 text-white font-bold py-2 px-4 rounded" type="submit" >Submit</button>
         </form>
         </div>
         </>

@@ -7,11 +7,10 @@ import React from "react";
 
 
 
-
 function YourTracks() {
 const dispatch = useDispatch();
 
-const current = useSelector((state) => state.songs)
+const current = useSelector((state : SongSelector ) => state.songs)
 const currentsongs = Object.values(current)
 
 
@@ -29,7 +28,7 @@ useEffect(() => {
         <div>
             <h1>Your tracks</h1>
             <div className="flex flex-col">
-                {currentsongs.map((song) => <div className="flex flex-row" key={song.id}>
+                {(currentsongs as SongInt[]).map((song : SongInt) => <div className="flex flex-row" key={song.id}>
                     <div>{song.title}</div>
                     <img className="w-24 h-24" src={song.imageUrl}></img>
                     <div>

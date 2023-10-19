@@ -167,7 +167,11 @@ router.get('/:songId/comments', async (req, res, next) => {
 
 // GET ALL SONGS
 router.get( '/', async (req, res) => {
-    const allSongs = await Song.findAll();
+    const allSongs = await Song.findAll({
+        include : [
+            {model : User, as : 'Artist'}
+        ]
+    });
     
     // if (!allSongs) {
     //     err.status = 404;

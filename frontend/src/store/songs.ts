@@ -52,9 +52,15 @@ const delete_song = (id : number) => {
     }
 }
 
+interface CreateSongInt {
+    title : string
+    description : string
+    url : string
+    imageUrl : string
+}
 
 // thunks
-export const thunk_createSong = (payload : string) => async (dispatch : AppDispatch) => {
+export const thunk_createSong = (payload : CreateSongInt) => async (dispatch : AppDispatch) => {
     const response = await csrfFetch('/api/songs', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
@@ -99,7 +105,7 @@ export const thunk_getASong = (id : string) => async (dispatch : any) => {
 }
 
 
-export const thunk_editSong = (payload : any) => async (dispatch : any) => {
+export const thunk_editSong = (payload : EditSongInt) => async (dispatch : AppDispatch) => {
     const response = await csrfFetch(`/api/songs/${payload.id}` , {
         method: 'PUT',
         headers: {'Content-Type':'application/json'},
