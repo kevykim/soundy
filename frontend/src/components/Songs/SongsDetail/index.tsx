@@ -36,14 +36,19 @@ function SongsDetail() {
             <div className="flex flex-row ">
                 <div>
                     <AudioPlayer 
+                        className="p-2"
+                        // src=""
                         showJumpControls={false}
                         showFilledProgress={false}
+                        showDownloadProgress={false}
                         defaultCurrentTime={false}
                         defaultDuration={false}
+                        autoPlayAfterSrcChange={false}
                         customVolumeControls={[]}
                         customAdditionalControls={[]}
+                        customProgressBarSection={[]}
                         customIcons={{
-                            play : <Icon icon="carbon:play-filled" color="green" width="70"/>,
+                            play : <Icon icon="zondicons:play-outline" color="green" width="70"/>,
                             pause : <Icon icon="zondicons:pause-solid" color="green" width="70"/>
                         }}
                     />
