@@ -1,29 +1,54 @@
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { thunk_createSong } from "../../../store/songs";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useForm, type FieldValues } from "react-hook-form"
 import React from "react";
+
 
 
 function UploadSong() {
     const dispatch : any = useDispatch();
     const navigate = useNavigate();
     const sessionUser = useSelector((state : any) => state.session.user);
-    
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [url, setUrl] = useState('');
-    const [imageUrl, setImageUrl] = useState('');
 
+      const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+    // getValues,
+  } = useForm();
+    
+
+    // const [description, setDescription] = useState('');
+    // const [url, setUrl] = useState('');
+    // const [imageUrl, setImageUrl] = useState('');
+    // const [errors, setErrors] = useState([]);
+    // const [submitted, setSubmitted] = useState(false)
     // When a user uploads a song, should they also add information for album? 
 
 
-    const onSubmit = (event : React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-
-         return dispatch(thunk_createSong({title, description, url, imageUrl}))
-        
+    const onSubmit = (data : FieldValues) => {
+        const {title, description, url, imageUrl} = data
+         dispatch(thunk_createSong({
+            title,
+            description,
+            url,
+            imageUrl
+        }))
+         reset();
     }
+
+    
+
+    // useEffect(() => {
+    //     const validation = [];
+    //     if (!title.length || title.length >= 30) validation.push('Enter a title within 30 characters')
+
+    //     setErrors(validation)
+    // },[title])
+
 
 
     useEffect(() => {
@@ -33,6 +58,7 @@ function UploadSong() {
     },[navigate, sessionUser])
 
 
+
     return (
         <>
             <div className="flex flex-row p-2 justify-between w-60">
@@ -40,37 +66,62 @@ function UploadSong() {
                 <NavLink to='/tracks'>Your tracks</NavLink>
                 <NavLink to='/albums'>Albums</NavLink>
             </div>
+            {/* {(errors.length > 0 && submitted === true) && (<div>{errors}</div>)} */}
         <div className="flex flex-col justify-center items-center h-screen">
-        <form onSubmit={onSubmit} className="flex flex-col justify-center border border-black p-4 w-1/2 h-96">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-around border border-black rounded-lg p-4 shadow-lg  w-1/2 h-96">
             <input
-            className="border border-black"
-             type="text"
-              value={title}
-              placeholder="title"
-               onChange={(event) => setTitle(event.target.value)} 
+            className={`focus:outline-none focus:ring-1 ${!errors?.title ? "focus:ring-green-800 focus:border-green-800" : "focus:ring-red-500 focus:border-red-500 border-2 border-red-500"}
+           form-input w-full rounded-md shadow-sm`}
+              placeholder="Title"
+               {...register("title", {
+                required : "Title is required",
+                maxLength : {
+                    value : 30,
+                    message : "Title must be less than 30 characters"
+                },
+               })} 
                />
+                {errors?.title && (<p className="text-red-500 text-xs">{errors.title.message}</p>)}
             <input
-             className="border border-black"
-              type="text"
-              placeholder="genre"
-               value={description}
-               onChange={(event) => setDescription(event.target.value)} 
+            className={`focus:outline-none focus:ring-1 ${!errors?.description ? "focus:ring-green-800 focus:border-green-800" : "focus:ring-red-500 focus:border-red-500 border-2 border-red-500"}
+           form-input w-full rounded-md shadow-sm`}
+              placeholder="Description"
+               {...register("description", {
+                required : "Description is required",
+                maxLength : {
+                    value : 30,
+                    message : "Description must be less than 30 characters"
+                }
+               })}
                />
+                {errors?.description && (<p className="text-red-500 text-xs">{errors.description.message}</p>)}
             <input
-             className="border border-black"
-              type="text"
-              placeholder="song url"
-               value={url}
-               onChange={(event) => setUrl(event.target.value)} 
+            className={`focus:outline-none focus:ring-1 ${!errors?.url ? "focus:ring-green-800 focus:border-green-800" : "focus:ring-red-500 focus:border-red-500 border-2 border-red-500"}
+           form-input w-full rounded-md shadow-sm`}
+              placeholder="Song url"
+               {...register('url', {
+                required : "Song url is required",
+                pattern : {
+                    value : /^(?=.*mp3)(?=.*\.com)/,
+                    message : "Must be a valid url"
+                }
+               })}
                />
+                {errors?.url && (<p className="text-red-500 text-xs">{errors.url.message}</p>)}
             <input
-             className="border border-black"
-              type="text"
-              placeholder="image url"
-               value={imageUrl}
-               onChange={(event) => setImageUrl(event.target.value)} 
+            className={`focus:outline-none focus:ring-1 ${!errors.imageUrl ? "focus:ring-green-800 focus:border-green-800" : "focus:ring-red-500 focus:border-red-500 border-2 border-red-500"}
+           form-input w-full rounded-md shadow-sm`}
+              placeholder="Image url"
+               {...register('imageUrl', {
+                required : "Image url is required",
+                 pattern : {
+                    value: /\.com.*\.(jpeg|png|gif)/,
+                    message: "Must be a valid url"
+                }
+               })}
                />
-            <button className="bg-green-800 hover:bg-green-900 text-white font-bold py-2 px-4 rounded" type="submit" >Submit</button>
+                {errors?.imageUrl && (<p className="text-red-500 text-xs">{errors.imageUrl.message}</p>)}
+            <button disabled={isSubmitting} className="bg-green-800 hover:bg-green-900 text-white font-bold py-2 px-4 disabled:bg-gray-500 rounded" type="submit" >Submit</button>
         </form>
         </div>
         </>
