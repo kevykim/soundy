@@ -17,17 +17,15 @@ function EditTracks () {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    
 
+        useEffect(() => {
+            dispatch(thunk_getASong(id))
+        }, [dispatch, id])
 
-    useEffect(() => {
-     dispatch((thunk_getASong(id)))
-     
-    },[dispatch, id])
     
     const currentTrack = useSelector((state : SongSelector) => state.songs[id])
 
-    
-    const {albumId, title, description, url, imageUrl} = currentTrack
     
     const {
     register,
@@ -38,11 +36,11 @@ function EditTracks () {
   } = useForm({
     defaultValues : {
         id,
-        albumId : albumId || null,
-        title : title,
-        description : description,
-        url : url,
-        imageUrl : imageUrl
+        albumId : currentTrack?.albumId || null,
+        title : currentTrack?.title,
+        description : currentTrack?.description,
+        url : currentTrack?.url,
+        imageUrl : currentTrack?.imageUrl
     }
   });
     // const [editTitle, setTitle] = useState<string>(title);
@@ -57,7 +55,7 @@ function EditTracks () {
         setSubmitted(true)
          dispatch(thunk_editSong({
             id,
-            albumId : albumId || null,
+            albumId : currentTrack?.albumId || albumId || null,
             title ,
             description: description,
             url: url,
