@@ -13,7 +13,6 @@ function DeleteModal({id}) {
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
 
-  console.log(id)
   
   const deleteFunction = () => {
     dispatch(thunk_deleteSong(id))
