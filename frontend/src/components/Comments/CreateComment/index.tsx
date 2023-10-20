@@ -1,5 +1,5 @@
-import React ,{ ReactEventHandler, useState } from "react";
-import { useDispatch } from "react-redux";
+import React ,{ useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { thunk_createComment, thunk_getAllComments } from "../../../store/comments";
 
 // interface CreateCommentProps {
@@ -9,9 +9,13 @@ import { thunk_createComment, thunk_getAllComments } from "../../../store/commen
 //   username : string
 // }
 
-function CreateComment  ({findSong, songId, userId, username }) {
+function CreateComment  ({songId, userId, username }) {
     const dispatch = useDispatch();
     const [body, setBody] = useState('');
+    const [errors, setErrors] = useState<string[]>([]);
+    const sessionUser = useSelector((state : any) => state.session.user);
+
+    console.log(sessionUser)
 
     const submitComment = async () => {
         
@@ -26,14 +30,23 @@ function CreateComment  ({findSong, songId, userId, username }) {
 
     }
 
+    useEffect(() => {
+      const validation = []
+      if (body.length >= 100) validation.push("Comments must be less than 100 characters");
+      setErrors(validation) 
+    },[body.length])
+
 
     
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
+      if (event.key === 'Enter') {
+    if (errors.length > 0) {
       event.preventDefault();
+    } else {
       submitComment();
       setBody('');
     }
+  }
   };
 
     const onSubmit = ( event : React.FormEvent<HTMLFormElement>) => {
@@ -43,8 +56,9 @@ function CreateComment  ({findSong, songId, userId, username }) {
     }
 
     return (
+      <div className="bg-gray-200">
          <form onSubmit={onSubmit} className=" z-1 flex flex-row items-center">
-            <img className="w-12 h-12 p-1" src={findSong?.Artist?.profileImg}></img>
+            <img className="w-12 h-12 p-1" src={sessionUser?.profileImg}></img> 
             <div className="p-2">
             <input className="z-2"
              value={body}
@@ -55,6 +69,8 @@ function CreateComment  ({findSong, songId, userId, username }) {
                type="text"></input>
             </div>
         </form>
+            {errors && (<p className="text-xs ml-14 mb-4 text-red-500">{errors}</p>)}
+      </div>
     )
 }  
 
