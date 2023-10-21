@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect} from "react";
@@ -25,6 +25,13 @@ function SongsDetail() {
         const findComments = useSelector((state : any) => state.comments)
         const allComments : commentsInt[] = Object.values(findComments)
 
+        const [showDelete, setShowDelete] = useState(false);
+
+        const onClick = (event) => {
+            event.preventDefault();
+            setShowDelete(!showDelete)
+        }
+
 
         useEffect(() => {
             dispatch(thunk_getASong(id));
@@ -33,11 +40,9 @@ function SongsDetail() {
 
     return (
         <div>
-        <div className="h-96 flex flex-row bg-blue-200 justify-between p-5">
-            <div className="flex flex-row ">
-                <div>
+        <div className="h-96 flex flex-row bg-gradient-to-bl from-violet-200 via-sky-400 to-emerald-300 justify-between p-5">
+            <div className="flex flex-row p-2 justify-center">
                     <AudioPlayer 
-                        className="p-2"
                         // src=""
                         showJumpControls={false}
                         showFilledProgress={false}
@@ -49,44 +54,71 @@ function SongsDetail() {
                         customAdditionalControls={[]}
                         customProgressBarSection={[]}
                         customIcons={{
-                            play : <Icon icon="zondicons:play-outline" color="green" width="70"/>,
-                            pause : <Icon icon="zondicons:pause-solid" color="green" width="70"/>
+                            play : <Icon icon="zondicons:play-outline" color="green" width="90"/>,
+                            pause : <Icon icon="zondicons:pause-solid" color="green" width="90"/>
                         }}
-                    />
-                </div>
-                <div className="flex flex-col">
-                    <h1>{findSong?.title}</h1>
-                    <h2>{findSong?.Artist?.username}</h2>
+                        />
+                <div className="flex flex-col items-start ml-2">
+                    <h1 className="text-3xl bg-black text-white p-1">{findSong?.title}</h1>
+                    <h2 className="text-2xl mt-1 bg-black text-white p-1">{findSong?.Artist?.username}</h2>
                 </div>
             </div>
             <img className="w-80 h-80" src={findSong?.imageUrl}></img>
         </div>
         {!sessionUser ? (
-        <div className="bg-gray-200 p-1">
+        <div className="bg-gray-200 mb-2 p-1">
             <CommentModal />
         </div>) :
          (sessionUser && sessionUser?.id !== findSong?.userId) && 
          (< CreateComment songId={id} userId={sessionUser?.id} username={sessionUser?.username}/>)}
-        <div className="mt-2 p-3">add playlist button</div>
-        <div className="flex flex-row">
+         <div className="flex flex-row ml-10">
+         <div className="flex flex-row justify-between  mt-3 mb-3  p-1 items-center border border-gray-500 w-28">
+        <Icon icon="iconoir:playlist-add" color="gray" width="17" />
+        <div className="text-xs">Add to playlist</div>
+         </div>
+         <div className="flex flex-row justify-between ml-2 mt-3 mb-3  p-1 items-center border border-gray-500 w-16">
+            <Icon icon="ph:share-bold" color="gray" width="17" />
+            <div className="text-xs">Share</div>
+         </div>
+         <div className="flex flex-row justify-between ml-2 mt-3 mb-3  p-1 items-center border border-gray-500 w-22">
+            <Icon icon="octicon:link-16" color="gray" width="17" />
+            <div className="text-xs">Copy Link</div>
+         </div>
+         </div>
+        <div className="h-1 border-b-2 w-680 ml-10 border-black-500 mb-2"></div>
+        <div className="flex flex-row w-750">
             <div className="flex flex-col justify-start items-center p-2">
             <img className="w-20 h-20" src={findSong?.Artist.profileImg}></img>
-            <div className="p-2 text-sm">
+            <div className="p-2 text-xs">
                 {findSong?.Artist?.username}
             </div>
             </div>
             <div>
-            <div className="p-2 mt-3">{allComments.length} comments</div>
+                <div className="text-sm p-4">{findSong?.description}</div>
+                <div className="flex flex-row items-center ml-1">
+            <Icon icon="fluent:comment-28-filled" color="gray" />
+            <div className="text-sm ml-2 text-gray-500">{allComments.length} comments</div>
+                </div>
             <div className="h-1 border-b-2 border-black-500 mb-2"></div>
             {allComments.map((comments : commentsInt) => 
-            <div className="flex flex-row" key={comments.id}>
-                <div className="flex flex-col">
+            <div className="flex flex-row items-center p-2" key={comments.id}>
+                    <div className="flex flex-row w-96">
+                    <img className="w-10 h-10" src={comments?.User?.profileImg}></img>
+                    <div className="flex flex-col ml-1">
                     <div className="text-sm text-gray-600">{comments?.User?.username}</div>
                     <EditableComment prevComment={comments.body} username={comments?.User?.username} songId={id} commentId={comments.id} />
-                </div>
-                    <div>{comments.createdAt}</div>
+                    </div>
+                    </div>
+                    <div>
+                    <div className="text-xs mb-5 justify-items-end">{new Date(comments.createdAt).toLocaleDateString()}</div>
                 {/* <EditComment username={comments?.User?.username} songId={id} commentId={comments.id} body={comments.body}  /> */}
-                <DeleteComment id={comments.id} />
+                <div className="flex flex-row items-center">
+               {comments?.User.username === sessionUser.username && <button onClick={onClick}>
+                <Icon icon="bi:three-dots" color="gray" width="17" />
+                </button>}
+                    {(comments?.User.username === sessionUser.username && showDelete) && <DeleteComment id={comments.id} currentComment={comments.body}/>}
+                </div>
+                    </div>
             </div>)}
             </div>
         </div>
