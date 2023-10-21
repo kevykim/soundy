@@ -15,7 +15,6 @@ function CreateComment  ({songId, userId, username }) {
     const [errors, setErrors] = useState<string[]>([]);
     const sessionUser = useSelector((state : any) => state.session.user);
 
-    console.log(sessionUser)
 
     const submitComment = async () => {
         
@@ -56,7 +55,7 @@ function CreateComment  ({songId, userId, username }) {
     }
 
     return (
-      <div className="bg-gray-200">
+      <div className="bg-gray-200 mb-4">
          <form onSubmit={onSubmit} className=" z-1 flex flex-row items-center">
             <img className="w-12 h-12 p-1" src={sessionUser?.profileImg}></img> 
             <div className="p-2">
