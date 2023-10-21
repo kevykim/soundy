@@ -144,7 +144,7 @@ router.get('/:songId/comments', async (req, res, next) => {
             songId : songId
         },
         include : [
-            {model: User, attributes : ['id', 'username']}
+            {model: User, attributes : ['id', 'username', 'profileImg']}
         ]
     });
 

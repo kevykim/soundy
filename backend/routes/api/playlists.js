@@ -178,7 +178,6 @@ router.delete('/:playlistId', requireAuth, async (req, res, next) => {
     const userId = req.user.id;
     const playlistId = req.params.playlistId;
 
-    console.log(userId)
 
     const deletePlaylist = await Playlist.findOne({
         where : {

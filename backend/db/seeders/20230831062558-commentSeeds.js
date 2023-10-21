@@ -4,12 +4,12 @@
 
 const commentsArr = [
   {
-    userId: 1,
+    userId: 2,
     songId: 1,
     body: "Nice song",
   },
   {
-    userId: 1,
+    userId: 3,
     songId: 2,
     body: "Great song",
   },
@@ -19,12 +19,12 @@ const commentsArr = [
     body: "Excellent song",
   },
   {
-    userId: 2,
+    userId: 3,
     songId: 1,
     body: "Nice song",
   },
   {
-    userId: 2,
+    userId: 1,
     songId: 2,
     body: "Great song",
   },
@@ -34,7 +34,7 @@ const commentsArr = [
     body: "Excellent song",
   },
   {
-    userId: 3,
+    userId: 2,
     songId: 1,
     body: "Nice song",
   },
@@ -44,7 +44,7 @@ const commentsArr = [
     body: "Great song",
   },
   {
-    userId: 3,
+    userId: 1,
     songId: 3,
     body: "Excellent song",
   },
