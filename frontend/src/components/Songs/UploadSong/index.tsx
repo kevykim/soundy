@@ -1,15 +1,16 @@
-import { useEffect } from "react"
+
 import { useDispatch, useSelector } from "react-redux"
 import { thunk_createSong } from "../../../store/songs";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useForm, type FieldValues } from "react-hook-form"
+import { useLocation } from "react-router-dom";
+import LoginFormModal from "../../LoginModal";
 import React from "react";
 
 
 
 function UploadSong() {
     const dispatch : any = useDispatch();
-    const navigate = useNavigate();
     const sessionUser = useSelector((state : any) => state.session.user);
 
       const {
@@ -40,8 +41,6 @@ function UploadSong() {
          reset();
     }
 
-    
-
     // useEffect(() => {
     //     const validation = [];
     //     if (!title.length || title.length >= 30) validation.push('Enter a title within 30 characters')
@@ -49,25 +48,34 @@ function UploadSong() {
     //     setErrors(validation)
     // },[title])
 
+    const location = useLocation();
+    const currenthPath = location.pathname;
 
-
-    useEffect(() => {
-        if (!sessionUser) {
-            navigate('/')
-        }
-    },[navigate, sessionUser])
+    // console.log(currenthPath)
 
 
 
     return (
         <>
-            <div className="flex flex-row p-2 justify-between w-60">
-                <NavLink to='/upload'>Upload</NavLink>
-                <NavLink to='/tracks'>Your tracks</NavLink>
-                <NavLink to='/albums'>Albums</NavLink>
+        {!sessionUser ? 
+        <div className="flex justify-center items-center h-screen mt-5">
+        <div className="flex flex-col justify-center items-center mt-4">
+            <div className="text-xl font-bold">
+            Want to see more? 
             </div>
+        <div className="text-4xl bg-green-800 hover:bg-green-900 text-white font-bold py-2 px-4 w-40 text-center rounded shadow-sm"><LoginFormModal /> </div>
+        </div>
+        </div> 
+        : <>
+            <div className="flex flex-row p-4 justify-between w-64 h-14">
+                <NavLink className="hover:border-b-2 border-green-800 hover:text-green-800 h-11" to='/upload'>Upload</NavLink>
+                <NavLink className="hover:border-b-2 border-green-800 hover:text-green-800 h-11" to='/tracks'>Your tracks</NavLink>
+                <NavLink className="hover:border-b-2 border-green-800 hover:text-green-800 h-11" to='/albums'>Albums</NavLink>
+            </div>
+            <div className="h-1 border-b-2 border-black-500 mb-2"></div>
             {/* {(errors.length > 0 && submitted === true) && (<div>{errors}</div>)} */}
-        <div className="flex flex-col justify-center items-center h-screen">
+        <div className="flex flex-col justify-center items-center mt-4">
+            <h1 className="text-3xl font-bold mb-4">Upload your track</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-around border border-black rounded-lg p-4 shadow-lg  w-1/2 h-96">
             <input
             className={`focus:outline-none focus:ring-1 ${!errors?.title ? "focus:ring-green-800 focus:border-green-800" : "focus:ring-red-500 focus:border-red-500 border-2 border-red-500"}
@@ -124,6 +132,7 @@ function UploadSong() {
             <button disabled={isSubmitting} className="bg-green-800 hover:bg-green-900 text-white font-bold py-2 px-4 disabled:bg-gray-500 rounded" type="submit" >Submit</button>
         </form>
         </div>
+        </>}
         </>
     )
 }
