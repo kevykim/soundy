@@ -26,9 +26,9 @@ function LoginFormPage() {
 
   return (
     <form className="h-96 w-96 flex flex-col border-0 justify-around rounded-m pl-7 pr-7 pt-6 pb-6" onSubmit={handleSubmit}>
-      <ul className='text-red-500'>
+      {/* <ul className='text-red-500'>
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-      </ul>
+      </ul> */}
       <label>
         Username or Email
         <input
@@ -38,6 +38,11 @@ function LoginFormPage() {
           value={credential}
           onChange={(e) => setCredential(e.target.value)}
         />
+        {errors.includes('Please provide a valid email or username.')
+         ? (<div className='text-xs text-red-500'>{'Please provide a valid email or username.'}</div>) 
+         : (errors.includes("The provided credentials were invalid.")) ? (<div className='text-xs text-red-500'>{'The provided credentials were invalid.'}</div>) 
+         : (<div></div>)
+      }
       </label>
       <label>
         Password
@@ -48,6 +53,7 @@ function LoginFormPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        {errors.includes('Please provide a password.') && <div className='text-xs text-red-500'>{'Please provide a password.'}</div>}
       </label>
       <button className="h-12 bg-green-800 hover:bg-green-900 text-white rounded-md font-bold" 
       type="submit">Log In</button>

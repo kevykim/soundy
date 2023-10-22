@@ -113,10 +113,10 @@ function SongsDetail() {
                     <div className="text-xs mb-5 justify-items-end">{new Date(comments.createdAt).toLocaleDateString()}</div>
                 {/* <EditComment username={comments?.User?.username} songId={id} commentId={comments.id} body={comments.body}  /> */}
                 <div className="flex flex-row items-center">
-               {comments?.User.username === sessionUser.username && <button onClick={onClick}>
+               {comments?.User?.username === sessionUser?.username && <button onClick={onClick}>
                 <Icon icon="bi:three-dots" color="gray" width="17" />
                 </button>}
-                    {(comments?.User.username === sessionUser.username && showDelete) && <DeleteComment id={comments.id} currentComment={comments.body}/>}
+                    {(comments?.User?.username === sessionUser?.username && showDelete) && <DeleteComment id={comments.id} currentComment={comments.body}/>}
                 </div>
                     </div>
             </div>)}
