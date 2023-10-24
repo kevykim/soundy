@@ -14,6 +14,7 @@ import SongsDetail from './components/Songs/SongsDetail';
 import UploadSong from './components/Songs/UploadSong';
 import YourTracks from './components/Songs/Yourtracks';
 import EditTracks from './components/Songs/EditTracks';
+import Footer from './components/Footer';
 
 function App() {
 
@@ -25,7 +26,8 @@ function App() {
 
 
   return (
-    <>
+    <div className='flex flex-col h-screen justify-between'>
+      <div>
     <Navigation isLoaded={isLoaded} />
      
      {isLoaded && (<Routes>
@@ -38,7 +40,11 @@ function App() {
         <Route path='/songs/:id/edit' element={<EditTracks />}/>
      </Routes>
      )}    
-    </>
+      </div>
+      <div>
+     <Footer />
+      </div>
+    </div>
 
   );
 }

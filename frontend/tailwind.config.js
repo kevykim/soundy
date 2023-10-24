@@ -7,12 +7,15 @@ export default {
         120: "600px",
         130: "450px",
       },
-      width : {
-        120 : "500px",
-        750 : "750px",
-        680 : "680px",
-        900 : "900px",
-      }
+      width: {
+        120: "500px",
+        750: "750px",
+        680: "680px",
+        900: "900px",
+      },
+      colors: {
+        audioplayer: "#eff1f2",
+      },
     },
   },
   plugins: [require("@tailwindcss/forms")],
