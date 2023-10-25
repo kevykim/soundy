@@ -8,6 +8,7 @@ import React from "react";
 
 import { useForm, type FieldValues } from "react-hook-form"
 
+import detail from '../../../public/assets/detail.png'
 
 function EditTracks () {
     type idType = {
@@ -167,6 +168,11 @@ function EditTracks () {
             </div>
             </>
         )}
+        <div className="flex flex-row justify-center mt-24 mb-10">
+                <div className="border-b border-gray-300 border-solid h-5 w-60"></div>
+                <img className="w-10 h-10 ml-2 mr-2" src={detail}></img>
+                <div className="border-b border-gray-300 border-solid h-5 w-60"></div>
+        </div>
         </>
     )
 }

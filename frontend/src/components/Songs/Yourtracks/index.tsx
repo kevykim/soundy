@@ -8,6 +8,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import React from "react";
 import LoginFormModal from "../../LoginModal";
 
+import detail from '../../../public/assets/detail.png'
 
 
 function YourTracks() {
@@ -25,7 +26,7 @@ useEffect(() => {
 },[dispatch])
 
     return (
-        <>
+        <div className="flex flex-col">
         {!sessionUser ? (
         <div className="flex justify-center items-center h-screen mt-5">
         <div className="flex flex-col justify-center items-center mt-4">
@@ -65,7 +66,12 @@ useEffect(() => {
         </div>
         </>
         }
-        </>
+            <div className="flex flex-row justify-center mt-10 mb-10">
+                <div className="border-b border-gray-300 border-solid h-5 w-96"></div>
+                <img className="w-10 h-10 ml-2 mr-2" src={detail}></img>
+                <div className="border-b border-gray-300 border-solid h-5 w-96"></div>
+        </div>
+        </div>
     )
 }
 

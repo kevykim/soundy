@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 import LoginFormModal from "../../LoginModal";
 import React from "react";
 
+import detail from '../../../public/assets/detail.png'
 
 
 function UploadSong() {
@@ -133,6 +134,11 @@ function UploadSong() {
         </form>
         </div>
         </>}
+        <div className="flex flex-row justify-center mt-24 mb-10">
+                <div className="border-b border-gray-300 border-solid h-5 w-60"></div>
+                <img className="w-10 h-10 ml-2 mr-2" src={detail}></img>
+                <div className="border-b border-gray-300 border-solid h-5 w-60"></div>
+        </div>
         </>
     )
 }
