@@ -46,7 +46,7 @@ function Navigation({ isLoaded } : NavigationProps){
   }
 
   return (
-    <div className=' bg-black pl-3 pr-5 text-sm' >
+    <div className=' bg-black pl-2 pr-5 text-sm' >
       <div className=' text-white flex flex-row justify-between '>
         <NavLink className='p-2' to="/">
           <img className='h-10'  src={logo}></img>
