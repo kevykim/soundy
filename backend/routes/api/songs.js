@@ -172,6 +172,7 @@ router.get( '/', async (req, res) => {
             {model : User, as : 'Artist'}
         ]
     });
+
     
     // if (!allSongs) {
     //     err.status = 404;

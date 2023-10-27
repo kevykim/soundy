@@ -6,11 +6,16 @@ const { Song, User, Playlist, Album } = require('../../db/models');
 
 
 // GET details of an Artist from ID
-router.get('/:artistId', async (req, res, next) => {
+router.get('/:username', async (req, res, next) => {
 
-    const artistId = req.params.artistId;
+    const username = req.params.username
 
-    let users = await User.findByPk(artistId);
+    
+    // const artistId = req.params.artistId;
+    
+    let users = await User.findOne({where : { username : username}});
+
+    console.log(users.id)
 
      if (!users) {
        const err = new Error("Couldn't find an Artist with the specified id");
@@ -20,9 +25,9 @@ router.get('/:artistId', async (req, res, next) => {
        return next(err);
      }
 
-     users = users.toJSON();
-     users.totalSongs = await Song.count({ where: { userId : artistId } });
-     users.totalAlbums = await Album.count({ where: { userId : artistId } });
+    //  users = users.toJSON();
+    //  users.totalSongs = await Song.count({ where: { username : username } });
+    //  users.totalAlbums = await Album.count({ where: { username : username } });
 
      res.status(200);
      return res.json(users)
@@ -31,11 +36,14 @@ router.get('/:artistId', async (req, res, next) => {
 
 
 // Get All Songs of Artist from ID
-router.get('/:artistId/songs', async (req, res, next) => {
+router.get('/:username/songs', async (req, res, next) => {
 
-    const artistId = req.params.artistId
+    // const artistId = req.params.artistId
 
-    const users = await User.findByPk(artistId);
+    const username = req.params.username;
+
+
+    const users = await User.findOne({ where: { username: username } });
 
     if (!users) {
         const err = new Error("Couldn't find an Artist with the specified id")
@@ -44,23 +52,25 @@ router.get('/:artistId/songs', async (req, res, next) => {
         err.status = 404;
         return next(err)
     }
-    // console.log(users)
+
 
     const allArtistSongs = await Song.findAll({
-        where : {userId : artistId},
+        where : {userId : users.id},
     });
 
     res.status(200);
-    return res.json({Songs : allArtistSongs});
+    return res.json(allArtistSongs);
 
 });
 
 // GET all playlists of an Artist from ID
 router.get('/:artistId/playlists', async (req, res, next) => {
 
-    const artistId = req.params.artistId;
+    // const artistId = req.params.artistId;
 
-     const users = await User.findByPk(artistId);
+    const username = req.params.username;
+
+    const users = await User.findOne({ where: { username: username } });
 
      if (!users) {
        const err = new Error("Couldn't find an Artist with the specified id");
@@ -69,10 +79,9 @@ router.get('/:artistId/playlists', async (req, res, next) => {
        err.status = 404;
        return next(err);
      }
-     // console.log(users)
 
      const allArtistPlaylists = await Playlist.findAll({
-       where: { userId: artistId },
+       where: { userId: users.id },
      });
 
     //  console.log(allArtistPlaylists)
@@ -85,9 +94,11 @@ router.get('/:artistId/playlists', async (req, res, next) => {
 //GET all Albums of Artist ID
 router.get('/:artistId/albums', async (req, res, next) => {
 
-     const artistId = req.params.artistId;
+    //  const artistId = req.params.artistId;
 
-     const users = await User.findByPk(artistId);
+    const username = req.params.username;
+
+    const users = await User.findOne({ where: { username: username } });
 
      if (!users) {
        const err = new Error("Couldn't find an Artist with the specified id");
@@ -98,7 +109,7 @@ router.get('/:artistId/albums', async (req, res, next) => {
      }
 
      const allArtistAlbums = await Album.findAll({
-       where: { userId: artistId },
+       where: { userId: users.id },
      });
 
      res.status(200);
