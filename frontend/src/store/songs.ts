@@ -152,7 +152,7 @@ switch(action.type) {
          return newState
     case getASong:
         newState = {};
-         newState[action.songs.id] = action.songs
+         newState[action.songs?.id] = action.songs
          return newState
     case editSong:
          newState[action.songs.id] = action.songs

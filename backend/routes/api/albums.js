@@ -33,7 +33,7 @@ router.get('/current', async (req, res, next) => {
     }); 
 
     res.status(200);   
-    return res.json({Albums : currentAlbum});
+    return res.json(currentAlbum);
     
 
 });
@@ -110,7 +110,11 @@ router.get('/:albumId', async (req, res, next) => {
 // GET all ALBUMS
 router.get('/', async (req, res, next) => {
 
-    const findAlbums = await Album.findAll();
+    const findAlbums = await Album.findAll({
+        include : [
+            {model : User , as : 'Artist' }
+        ]
+    });
 
     res.status(200);
     return res.json({Albums : findAlbums});

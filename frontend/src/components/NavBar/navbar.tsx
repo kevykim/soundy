@@ -5,6 +5,7 @@ import ProfileButton from './profileButton';
 import LoginFormModal from '../LoginModal';
 import SignUpModal from '../SignUpModal.ts';
 import UploadModal from '../LoginModal/upload.tsx';
+import logo from '../../public/assets/Soundy.png'
 
 type UserType = {
     username : string
@@ -35,7 +36,7 @@ function Navigation({ isLoaded } : NavigationProps){
     );
   } else {
     sessionLinks = (
-      <div className='flex flex-row justify-between w-60'>
+      <div className='flex flex-row justify-between w-56 items-center'>
         <LoginFormModal />
         <SignUpModal />
         {!sessionUser ? <UploadModal /> : <NavLink to='/upload' className='flex flex-col justify-center'>upload</NavLink>}
@@ -45,9 +46,11 @@ function Navigation({ isLoaded } : NavigationProps){
   }
 
   return (
-    <div className=' bg-black p-5' >
+    <div className=' bg-black pl-2 pr-5 text-sm' >
       <div className=' text-white flex flex-row justify-between '>
-        <NavLink className='p-2' to="/">Home</NavLink>
+        <NavLink className='p-2' to="/">
+          <img className='h-10'  src={logo}></img>
+        </NavLink>
         {isLoaded && sessionLinks}
       </div>
     </div>

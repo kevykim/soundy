@@ -172,6 +172,7 @@ router.get( '/', async (req, res) => {
             {model : User, as : 'Artist'}
         ]
     });
+
     
     // if (!allSongs) {
     //     err.status = 404;
@@ -197,8 +198,12 @@ router.get('/current', requireAuth, async (req, res, next) => {
     }
 
     const currentSongs = await Song.findAll({
-        where: { userId: currentUser}
-    })
+      where: { userId: currentUser },
+      include: [
+        { model: User, as: "Artist" },
+        { model: Album, attributes: ["id", "title", "imageUrl"] },
+      ],
+    });
 
     return res.json(currentSongs)
 

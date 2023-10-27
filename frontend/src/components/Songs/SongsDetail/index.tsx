@@ -8,11 +8,13 @@ import CreateComment from "../../Comments/CreateComment";
 // import EditComment from "../../Comments/EditComment";
 import DeleteComment from "../../Comments/DeleteComment";
 import CommentModal from "../../LoginModal/comment";
+import { NavLink } from "react-router-dom";
 
 import AudioPlayer from 'react-h5-audio-player'
 import {Icon} from '@iconify/react'
 import EditableComment from "../../Comments/EditComment/editComment";
 
+import detail from '../../../public/assets/detail.png'
 
 function SongsDetail() {
         const dispatch = useDispatch();
@@ -39,7 +41,7 @@ function SongsDetail() {
         },[dispatch, id]);
 
     return (
-        <div>
+        <div className="flex flex-col">
         <div className="h-96 flex flex-row bg-gradient-to-bl from-violet-200 via-sky-400 to-emerald-300 justify-between p-5">
             <div className="flex flex-row p-2 justify-center">
                     <AudioPlayer 
@@ -60,7 +62,7 @@ function SongsDetail() {
                         />
                 <div className="flex flex-col items-start ml-2">
                     <h1 className="text-3xl bg-black text-white p-1">{findSong?.title}</h1>
-                    <h2 className="text-2xl mt-1 bg-black text-white p-1">{findSong?.Artist?.username}</h2>
+                    <NavLink to={`/artists/${findSong?.Artist?.username}`} className="text-2xl mt-1 bg-black text-white p-1">{findSong?.Artist?.username}</NavLink>
                 </div>
             </div>
             <img className="w-80 h-80" src={findSong?.imageUrl}></img>
@@ -86,7 +88,7 @@ function SongsDetail() {
          </div>
          </div>
         <div className="h-1 border-b-2 w-680 ml-10 border-black-500 mb-2"></div>
-        <div className="flex flex-row w-750">
+        <div className="flex flex-row w-750 border-r-2 border-gray-200">
             <div className="flex flex-col justify-start items-center p-2">
             <img className="w-20 h-20" src={findSong?.Artist.profileImg}></img>
             <div className="p-2 text-xs">
@@ -113,13 +115,18 @@ function SongsDetail() {
                     <div className="text-xs mb-5 justify-items-end">{new Date(comments.createdAt).toLocaleDateString()}</div>
                 {/* <EditComment username={comments?.User?.username} songId={id} commentId={comments.id} body={comments.body}  /> */}
                 <div className="flex flex-row items-center">
-               {comments?.User.username === sessionUser.username && <button onClick={onClick}>
+               {comments?.User?.username === sessionUser?.username && <button onClick={onClick}>
                 <Icon icon="bi:three-dots" color="gray" width="17" />
                 </button>}
-                    {(comments?.User.username === sessionUser.username && showDelete) && <DeleteComment id={comments.id} currentComment={comments.body}/>}
+                    {(comments?.User?.username === sessionUser?.username && showDelete) && <DeleteComment id={comments.id} currentComment={comments.body}/>}
                 </div>
                     </div>
             </div>)}
+        <div className="flex flex-row justify-center mt-10 mb-10">
+                <div className="border-b border-gray-300 border-solid h-5 w-60"></div>
+                <img className="w-10 h-10 ml-2 mr-2" src={detail}></img>
+                <div className="border-b border-gray-300 border-solid h-5 w-60"></div>
+        </div>
             </div>
         </div>
         </div>

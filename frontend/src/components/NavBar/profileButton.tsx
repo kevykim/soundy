@@ -37,20 +37,18 @@ function ProfileButton({ user } : {user : User}) {
   };
 
   return (
-    <>
+    <div className="flex relative group">
       <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
+
+        {user.profileImg ? <img className="ml-2" src={user.profileImg}></img> : <i className="fas fa-user-circle" />}
       </button>
       {showMenu && (
-        <div className="profile-dropdown">
-          <div>{user.username}</div>
-          <div>{user.email}</div>
-          <div>
-            <button onClick={logout}>Log Out</button>
-          </div>
+        <div className="flex flex-col absolute top-14 right-[-1rem] w-32 bg-white text-black border border-gray-400 space-y-2 text-sm font-bold">
+          <div className="hover:bg-slate-100 text-center p-2">{user.username}</div>
+            <button style={{ margin: 0 }} className="hover:bg-slate-100 text-center p-2" onClick={logout}>Sign out</button>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

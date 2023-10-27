@@ -40,13 +40,13 @@ useEffect(() => {
         {!loggedIn ?  <div className="flex flex-col items-center justify-center">
             <div className="text-2xl text-center font-medium shadow-sm pt-8 mb-8">
                  Hear what's trending for free in the Soundy community</div>
-                <div className="flex flex-wrap justify-between mb-8">
-            {allSongs.map((song : songInterface) => <div key={song.id}>
-                <NavLink className="flex flex-col justify-center items-center relative group" to={`/songs/${song.id}`}>
+                <div className="flex flex-wrap justify-center  mb-8">
+            {allSongs.map((song : songInterface) => <div key={song?.id}>
+                <NavLink className="flex flex-col items-center justify-center relative group" to={`/songs/${song?.id}`}>
                 <Icon className="absolute hidden group-hover:block justify-center items-center" icon="zondicons:play-outline" color="green" width="130"/>
-                <img className="w-48 h-48 ml-4 mr-4 shadow-lg" src={song.imageUrl} alt="song_image" ></img>
+                <img className="w-48 h-48 ml-4 mr-4 shadow-lg" src={song?.imageUrl} alt="song_image" ></img>
                 </NavLink>
-                 <div className="text-left ml-4 mt-2 text-sm">{song.title}</div>
+                 <div className="text-left ml-4 mt-2 text-sm">{song?.title}</div>
                 <div className="text-left ml-4 text-sm text-gray-500">{song?.Artist?.username}</div>
             </div>)}
                 </div>
@@ -68,14 +68,14 @@ useEffect(() => {
             : 
             <div className="flex flex-col items-center justify-center">
                 <div className="text-2xl text-center font-medium shadow-sm pt-8 mb-8">
-                 Top 50 Tracks</div>
+                 Top 20 Tracks</div>
             <div className="flex flex-wrap justify-between mb-8">    
-                {currentUserSongs.map((song : songInterface) => <div key={song.id}>
-                    <NavLink className="flex flex-col justify-center items-center relative group" to={`/songs/${song.id}`}>
+                {currentUserSongs.map((song : songInterface) => <div key={song?.id}>
+                    <NavLink className="flex flex-col justify-center items-center relative group" to={`/songs/${song?.id}`}>
                     <Icon className="absolute hidden group-hover:block justify-center items-center" icon="zondicons:play-outline" color="green" width="130"/>
-                <img className="w-48 h-48 ml-4 mr-4 shadow-lg" src={song.imageUrl} alt="song_image"  ></img>
+                <img className="w-48 h-48 ml-4 mr-4 shadow-lg" src={song?.imageUrl} alt="song_image"  ></img>
                     </NavLink>
-                    <div className="text-left ml-4 mt-2 text-sm">{song.title}</div>
+                    <div className="text-left ml-4 mt-2 text-sm">{song?.title}</div>
                     <div className="text-left ml-4 text-xs text-gray-500">{song?.Artist?.username}</div>
                 </div>)}
             </div>
@@ -84,7 +84,6 @@ useEffect(() => {
             </NavLink>
             {/* Your playlists */}
             </div>}
-            <footer> About us ETC ETC ETC</footer>
         </div>
     )
 }
