@@ -42,7 +42,7 @@ const get_artist_albums = (artist : string) => {
 
 //thunks
 export const thunk_getArtist = (payload : artistPayload) => async (dispatch : any) => {
-    const response = await csrfFetch(`/api/artists/${payload.id}`)
+    const response = await csrfFetch(`/api/artists/${payload}`)
     if (response.ok) {
         const data = await response.json()
         dispatch(get_artist(data))
@@ -50,7 +50,7 @@ export const thunk_getArtist = (payload : artistPayload) => async (dispatch : an
 };
 
 export const thunk_getArtistSongs = (payload : artistPayload) => async (dispatch : any) => {
-    const response = await csrfFetch(`/api/artists/${payload.id}/songs`)
+    const response = await csrfFetch(`/api/artists/${payload}/songs`)
     if (response.ok) {
         const data = await response.json()
         dispatch(get_artist_songs(data))
@@ -82,11 +82,11 @@ const artistReducer = (state = initialState, action : any) => {
     let newState : any = {...state};
     switch (action.type) {
         case getArtist:
-            newState[action.artists.id] = action.artists
+            newState[action.artist.id] = action.artist
             return newState
         case getArtistSongs:
             newState = {}
-            action.artists.forEach((artist : artistReducer) => {
+            action.artist.forEach((artist : artistReducer) => {
                 newState[artist.id] = action.artist
             })
             return newState

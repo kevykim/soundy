@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   comments : commentReducer,
   playlists : playlistReducer,
   albums : albumReducer,
-  artists : artistReducer,
+  artist : artistReducer,
 });
 
 

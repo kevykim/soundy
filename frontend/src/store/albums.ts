@@ -64,6 +64,7 @@ export const thunk_getCurrentUserAlbums = () => async (dispatch : any) => {
     if (response.ok) {
         const data = await response.json()
         dispatch(get_currentuser_albums(data))
+        return data
     }
 };
 
@@ -144,7 +145,7 @@ const albumReducer = (state = initialState, action : any) => {
             return newState
         case getAllAlbum:
             newState = {}
-            action.albums.forEach((album : albumReducer) => {
+            action.albums.Albums.forEach((album : albumReducer) => {
                 newState[album.id] = album
             })
             return newState
