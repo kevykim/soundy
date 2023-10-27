@@ -8,6 +8,7 @@ import CreateComment from "../../Comments/CreateComment";
 // import EditComment from "../../Comments/EditComment";
 import DeleteComment from "../../Comments/DeleteComment";
 import CommentModal from "../../LoginModal/comment";
+import { NavLink } from "react-router-dom";
 
 import AudioPlayer from 'react-h5-audio-player'
 import {Icon} from '@iconify/react'
@@ -61,7 +62,7 @@ function SongsDetail() {
                         />
                 <div className="flex flex-col items-start ml-2">
                     <h1 className="text-3xl bg-black text-white p-1">{findSong?.title}</h1>
-                    <h2 className="text-2xl mt-1 bg-black text-white p-1">{findSong?.Artist?.username}</h2>
+                    <NavLink to={`/artists/${findSong?.Artist?.username}`} className="text-2xl mt-1 bg-black text-white p-1">{findSong?.Artist?.username}</NavLink>
                 </div>
             </div>
             <img className="w-80 h-80" src={findSong?.imageUrl}></img>
