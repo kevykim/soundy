@@ -51,7 +51,7 @@ function ArtistTracks () {
             <div className="h-1 border-b-2 w-full border-gray-100 mb-2"></div>
             <div className="flex flex-row justify-between mt-4" style={{width: "1200px"}}>
                 <div className="">{artistSongs.map((song) => 
-                    (<NavLink to={`/songs/${song.id}`} className="flex flex-row p-4  w-900" key={song.id}>
+                    (<NavLink to={`/songs/${song.id}`} className="hover:bg-slate-200 flex flex-row p-4  w-750" key={song.id}>
                     <img className="h-40 w-40" src={song?.imageUrl}></img>
                     <div className="flex flex-col ml-4">
                     <div className="text-xs text-gray-400">{username}</div>
