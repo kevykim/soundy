@@ -6,6 +6,10 @@ import { NavLink } from "react-router-dom";
 import { thunk_getAllSongs } from "../../../store/songs";
 import { thunk_getAllAlbum } from "../../../store/albums";
 
+import { Icon } from "@iconify/react/dist/iconify.js";
+import EditAlbum from "../../Albums/EditAlbum";
+import DeleteAlbum from "../../Albums/DeleteAlbum";
+
 function ArtistAlbums () {
     const dispatch = useDispatch();
     const {username} = useParams(); 
@@ -15,6 +19,7 @@ function ArtistAlbums () {
         dispatch(thunk_getAllSongs())
         dispatch(thunk_getAllAlbum())
     }, [dispatch, username])
+    const sessionUser = useSelector((state : any) => state.session.user);
 
     const findArtist = useSelector((state) => state.artist )
 
@@ -37,6 +42,7 @@ function ArtistAlbums () {
 
 
     const albumSongs = songs.filter((album) => album?.albumId === artistAlbums[0]?.id)
+
 
 
     return (
@@ -68,6 +74,15 @@ function ArtistAlbums () {
                     </NavLink>
                     ))} 
                     </div>
+                        {artist?.id === sessionUser?.id && 
+                            <div className="flex flex-row mt-2">
+                                 <div className="flex flex-row justify-between mb-3  p-1 items-center border border-gray-500 w-16">
+                                    <Icon icon="ph:share-bold" color="gray" width="17" />
+                                    <div className="text-xs">Share</div>
+                                </div>
+                                <EditAlbum albumId={album.id} />
+                                <DeleteAlbum albumTitle={album.title} albumId={album.id}/>
+                            </div>}
                     </div>
                 </div>))}
                 </div>
