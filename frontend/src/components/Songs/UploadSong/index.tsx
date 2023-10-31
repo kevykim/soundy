@@ -9,12 +9,11 @@ import React, { useEffect } from "react";
 
 import detail from '../../../public/assets/detail.png'
 import { thunk_getArtistAlbums } from "../../../store/artists";
-
+import CreateAlbum from "../../Albums/CreateAlbum";
 
 function UploadSong() {
     const dispatch : any = useDispatch();
     const navigate = useNavigate();
-
     const sessionUser = useSelector((state : any) => state.session.user);
 
       const {
@@ -91,7 +90,7 @@ function UploadSong() {
             {/* {(errors.length > 0 && submitted === true) && (<div>{errors}</div>)} */}
         <div className="flex flex-col justify-center items-center mt-4">
             <h1 className="text-3xl font-bold mb-4">Upload your track</h1>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-around border border-black rounded-lg p-4 shadow-lg  w-1/2" style={{height: "500px"}}>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-around border border-black rounded-lg p-4 shadow-lg  w-1/2" style={{height: "450px"}}>
             <input
             className={`focus:outline-none focus:ring-1 ${!errors?.title ? "focus:ring-green-800 focus:border-green-800" : "focus:ring-red-500 focus:border-red-500 border-2 border-red-500"}
            form-input w-full rounded-md shadow-sm`}
@@ -150,10 +149,10 @@ function UploadSong() {
           defaultValue="" 
           rules={{ required: 'Please select an album' }} 
           render={({ field }) => (
-            <select {...field} 
-                className={`focus:outline-none focus:ring-1 ${!errors.albumId ? "focus:ring-green-800 focus:border-green-800" : "focus:ring-red-500 focus:border-red-500 border-2 border-red-500"}
-           form-input w-full rounded-md shadow-sm`}
-            >
+              <select {...field} 
+              className={`focus:outline-none focus:ring-1 ${!errors.albumId ? "focus:ring-green-800 focus:border-green-800" : "focus:ring-red-500 focus:border-red-500 border-2 border-red-500"}
+              form-input w-full rounded-md shadow-sm`}
+              >
               <option value="" disabled>
                 Select an album
               </option>
@@ -166,6 +165,7 @@ function UploadSong() {
           )}
         />
                 {errors?.albumId && (<p className="text-red-500 text-xs">{errors.albumId.message}</p>)}
+          <CreateAlbum />
             <button disabled={isSubmitting} className="bg-green-800 hover:bg-green-900 text-white font-bold py-2 px-4 disabled:bg-gray-500 rounded" type="submit" >Submit</button>
         </form>
         </div>
