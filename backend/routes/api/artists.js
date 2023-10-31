@@ -15,7 +15,6 @@ router.get('/:username', async (req, res, next) => {
     
     let users = await User.findOne({where : { username : username}});
 
-    console.log(users.id)
 
      if (!users) {
        const err = new Error("Couldn't find an Artist with the specified id");

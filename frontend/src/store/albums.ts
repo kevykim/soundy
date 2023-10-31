@@ -83,7 +83,7 @@ export const thunk_editAlbum = (payload : albumPayload) => async (dispatch : any
 };
 
 export const thunk_getAlbum = (payload : albumPayload) => async (dispatch : any) => {
-    const response = await csrfFetch(`/api/albums/${payload.id}`)
+    const response = await csrfFetch(`/api/albums/${payload}`)
     if (response.ok) {
         const data = await response.json()
         dispatch(get_album(data))
