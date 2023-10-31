@@ -90,7 +90,7 @@ function SongsDetail() {
         <div className="h-1 border-b-2 w-680 ml-10 border-black-500 mb-2"></div>
         <div className="flex flex-row w-750 border-r-2 border-gray-200">
             <div className="flex flex-col justify-start items-center p-2">
-            <img className="w-20 h-20" src={findSong?.Artist.profileImg}></img>
+            <img className="w-20 h-20" src={findSong?.Artist?.profileImg}></img>
             <div className="p-2 text-xs">
                 {findSong?.Artist?.username}
             </div>

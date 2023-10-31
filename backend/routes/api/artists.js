@@ -91,7 +91,7 @@ router.get('/:artistId/playlists', async (req, res, next) => {
 
 
 //GET all Albums of Artist ID
-router.get('/:artistId/albums', async (req, res, next) => {
+router.get('/:username/albums', async (req, res, next) => {
 
     //  const artistId = req.params.artistId;
 
@@ -112,7 +112,7 @@ router.get('/:artistId/albums', async (req, res, next) => {
      });
 
      res.status(200);
-     return res.json({ Albums: allArtistAlbums });
+     return res.json( allArtistAlbums );
 });
 
 

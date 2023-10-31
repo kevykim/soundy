@@ -6,9 +6,12 @@ import { thunk_editSong, thunk_getASong } from "../../../store/songs";
 import LoginFormModal from "../../LoginModal";
 import React from "react";
 
-import { useForm, type FieldValues } from "react-hook-form"
+import { useForm, type FieldValues, Controller } from "react-hook-form"
 
 import detail from '../../../public/assets/detail.png'
+import { thunk_getArtistAlbums } from "../../../store/artists";
+
+
 
 function EditTracks () {
     type idType = {
@@ -30,16 +33,21 @@ function EditTracks () {
 
         useEffect(() => {
             dispatch(thunk_getASong(id))
-        }, [dispatch, id])
+            dispatch(thunk_getArtistAlbums(sessionUser?.username))
+        }, [dispatch, id, sessionUser?.username])
 
     
     const currentTrack = useSelector((state : SongSelector) => state.songs[id])
 
+    const findArtistAlbums = useSelector((state) => state.artist)
+
+    const allArtistAlbums = Object.values(findArtistAlbums);  
     
     const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    control
     // reset,
     // getValues,
   } = useForm({
@@ -59,12 +67,12 @@ function EditTracks () {
     const [submitted, setSubmitted] = useState(false);
 
     const onSubmit = (data : FieldValues) => {
-        const {title, description, url, imageUrl} = data
+        const {title, description, url, imageUrl, albumId} = data
 
         setSubmitted(true)
          dispatch(thunk_editSong({
             id,
-            albumId : currentTrack?.albumId || albumId || null,
+            albumId : albumId,
             title ,
             description: description,
             url: url,
@@ -163,6 +171,28 @@ function EditTracks () {
                })}
                />
                 {errors?.imageUrl && (<p className="text-red-500 text-xs">{errors.imageUrl.message}</p>)}
+                <Controller
+          name="albumId"
+          control={control}
+          defaultValue="" 
+          rules={{ required: 'Please select an album' }} 
+          render={({ field }) => (
+            <select {...field} 
+                className={`focus:outline-none focus:ring-1 ${!errors.albumId ? "focus:ring-green-800 focus:border-green-800" : "focus:ring-red-500 focus:border-red-500 border-2 border-red-500"}
+           form-input w-full rounded-md shadow-sm`}
+            >
+              <option value="" disabled>
+                Select an album
+              </option>
+                {allArtistAlbums.map((album) => (
+                    <option key={album.id} value={album.id}>
+                        {album.title}
+                    </option>
+                    ))}
+            </select>
+          )}
+        />
+                {errors?.albumId && (<p className="text-red-500 text-xs">{errors.albumId.message}</p>)}
             <button className="bg-green-800 hover:bg-green-900 text-white font-bold py-2 px-4 rounded" type="submit" >Submit</button>
         </form>
             </div>

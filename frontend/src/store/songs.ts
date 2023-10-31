@@ -53,6 +53,7 @@ const delete_song = (id : number) => {
 }
 
 interface CreateSongInt {
+    albumId : string
     title : string
     description : string
     url : string
