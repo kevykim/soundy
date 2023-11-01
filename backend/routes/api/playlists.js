@@ -78,6 +78,21 @@ router.post('/:playlistId/songs', requireAuth, async (req, res, next) => {
 });
 
 
+// GET all PLAYLISTS
+router.get('/', async (req, res, next) => {
+
+    const findPlaylist = await Playlist.findAll({
+      include: [
+        { model: User },
+        { model: Song, through: { attributes: [] } }
+      ],
+    });
+
+    res.status(200);
+    return res.json(findPlaylist);
+
+}); 
+
 
 // GET all playlists created by current user
 router.get('/current', requireAuth, async (req, res, next) => {

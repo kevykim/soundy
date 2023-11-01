@@ -19,6 +19,7 @@ import YourAlbums from './components/Albums/YourAlbums';
 import ArtistPage from './components/Artist/ArtistPage';
 import ArtistTracks from './components/Artist/ArtistTracks';
 import ArtistAlbums from './components/Artist/ArtistAlbums';
+import ArtistPlaylists from './components/Artist/ArtistPlaylists';
 
 function App() {
 
@@ -46,7 +47,7 @@ function App() {
         <Route path='/artists/:username' element={<ArtistPage />} />
         <Route path='/artists/:username/tracks' element={<ArtistTracks />} />
         <Route path='/artists/:username/albums' element={<ArtistAlbums />} />
-        <Route path='/artists/:username/playlists' />
+        <Route path='/artists/:username/playlists' element={<ArtistPlaylists />}/>
      </Routes>
      )}    
       </div>

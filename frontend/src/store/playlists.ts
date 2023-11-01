@@ -4,6 +4,7 @@ import { csrfFetch } from "./csrf";
 // types
 const createPlaylist = '/playlists/createPlaylist'
 const addSongToPlaylist = '/playlists/addSongToPlaylist'
+const getAllPlaylists = '/playlists/getAllPlaylist'
 const getCurrentUserPlaylists = '/playlists/getCurrentUserPlaylists'
 const getPlaylist = '/playlists/getPlaylist'
 const editPlaylist = '/playlists/editPlaylist'
@@ -32,6 +33,13 @@ const get_currentuser_playlists = (playlists : string) => {
         playlists
     }
 };
+
+const get_all_playlists = (playlists : string) => {
+    return {
+        type : getAllPlaylists,
+        playlists
+    }
+}
 
 const get_playlist = (playlists : string) => {
     return {
@@ -84,6 +92,14 @@ export const thunk_addSongToPlaylist = (payload : artistPayload) => async (dispa
     }
 };
 
+export const thunk_getAllPlaylists = () => async (dispatch : any) => {
+    const response = await csrfFetch('/api/playlists')
+    if (response.ok) {
+        const data = await response.json()
+        dispatch(get_all_playlists(data))
+    }
+};
+
 export const thunk_getCurrentUserPlaylists = () => async (dispatch : any) => {
     const response = await csrfFetch('/api/playlists/current')
     if (response.ok) {
@@ -93,7 +109,7 @@ export const thunk_getCurrentUserPlaylists = () => async (dispatch : any) => {
 };
 
 export const thunk_getPlaylist = (payload : artistPayload) => async (dispatch : any) => {
-    const response = await csrfFetch(`/api/playlists/${payload.id}`)
+    const response = await csrfFetch(`/api/playlists/${payload}`)
     if (response.ok) {
         const data = await response.json()
         dispatch(get_playlist(data))
@@ -136,6 +152,12 @@ const playlistReducer = (state = initialState, action : any) => {
             return newState
         case addSongToPlaylist:
             newState[action.playlists.id] = action.playlists
+            return newState
+        case getAllPlaylists:
+            newState = {...state}
+            action.playlists.forEach((playlist : playlistReducer) => {
+                newState[playlist.id] = playlist
+            })
             return newState
         case getCurrentUserPlaylists:
             newState = {}

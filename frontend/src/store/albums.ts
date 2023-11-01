@@ -144,7 +144,7 @@ const albumReducer = (state = initialState, action : any) => {
             newState[action.albums.id] = action.albums
             return newState
         case getAllAlbum:
-            newState = {}
+            newState = {...state}
             action.albums.Albums.forEach((album : albumReducer) => {
                 newState[album.id] = album
             })
