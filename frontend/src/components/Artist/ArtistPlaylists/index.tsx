@@ -11,9 +11,10 @@ import { thunk_getAllSongs } from "../../../store/songs";
 import { thunk_getAllAlbum } from "../../../store/albums";
 
 import { Icon } from "@iconify/react/dist/iconify.js";
-import EditAlbum from "../../Albums/EditAlbum";
-import DeleteAlbum from "../../Albums/DeleteAlbum";
+
 import { thunk_getAllPlaylists } from "../../../store/playlists";
+import EditPlaylist from "../../Playlists/EditPlaylist";
+import DeletePlaylist from "../../Playlists/DeletePlaylist";
 
 function ArtistPlaylists () {
     const dispatch = useDispatch();
@@ -83,7 +84,7 @@ function ArtistPlaylists () {
                     <div className="text-xs text-gray-400">{username}</div>
                     <div className="text-sm">{playlist?.name}</div>
                     <div className="flex flex-col border border-gray-300 w-650 mt-4">
-                        {playlistSongs.map((songs) => songs.map(song => (
+                        {playlistSongs.map((songs) => songs?.map(song => (
                             <NavLink
                             to={`/songs/${song.id}`}
                             className="hover:bg-slate-100 flex flex-row border border-gray-300 p-1"
@@ -102,8 +103,8 @@ function ArtistPlaylists () {
                                     <Icon icon="ph:share-bold" color="gray" width="17" />
                                     <div className="text-xs">Share</div>
                                 </div>
-                                {/* <EditAlbum playlistId={playlist.id} />
-                                <DeleteAlbum playlistTitle={playlist.title} playlistId={playlist.id}/> */}
+                                <EditPlaylist playlistId={playlist?.id} />
+                                <DeletePlaylist playlistName={playlist?.name} playlistId={playlist?.id}/>
                             </div>}
                     </div>
                 </div>))}
