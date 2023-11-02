@@ -7,7 +7,7 @@ import { useForm, type FieldValues } from "react-hook-form"
 import { thunk_createAlbum } from "../../../store/albums";
 import { thunk_getArtistAlbums } from "../../../store/artists";
 
-
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 function CreateAlbum () {
 
@@ -53,7 +53,15 @@ function CreateAlbum () {
             </button>
             {showModal && (
                 <Modal onClose={() => setShowModal(false)}>
-                    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-750 h-120 p-10">
+                    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-120 h-130 p-10 justify-between">
+                      <div className="flex flex-col">
+                      <div className="flex justify-end">
+                      <button onClick={() => setShowModal(false)} className="hover:bg-gray-300 rounded-sm p-2">
+                            <Icon icon="octicon:x-12" />
+                            </button>
+                      </div>
+                      <h1 className="flex self-center font-semibold text-2xl mb-2">Create Album</h1>
+                      </div>
                          <input
             className={`focus:outline-none focus:ring-1 ${!errors?.title ? "focus:ring-green-800 focus:border-green-800" : "focus:ring-red-500 focus:border-red-500 border-2 border-red-500"}
            form-input w-full rounded-md shadow-sm`}
