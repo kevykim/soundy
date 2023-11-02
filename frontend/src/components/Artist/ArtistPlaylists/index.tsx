@@ -54,7 +54,7 @@ function ArtistPlaylists () {
 
     const playlists = Object.values(findPlaylists)
 
-    const userPlaylists = playlists.filter((user) => user.userId === artist.id)
+    const userPlaylists = playlists.filter((user) => user.userId === artist?.id)
 
     const playlistSongs = userPlaylists.map((song => song.Songs))
     
