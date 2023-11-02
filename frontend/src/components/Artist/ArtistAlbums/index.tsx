@@ -6,6 +6,11 @@ import { NavLink } from "react-router-dom";
 import { thunk_getAllSongs } from "../../../store/songs";
 import { thunk_getAllAlbum } from "../../../store/albums";
 
+import { Icon } from "@iconify/react/dist/iconify.js";
+import EditAlbum from "../../Albums/EditAlbum";
+import DeleteAlbum from "../../Albums/DeleteAlbum";
+import { thunk_getAllPlaylists } from "../../../store/playlists";
+
 function ArtistAlbums () {
     const dispatch = useDispatch();
     const {username} = useParams(); 
@@ -14,7 +19,9 @@ function ArtistAlbums () {
         dispatch(thunk_getArtist(username))
         dispatch(thunk_getAllSongs())
         dispatch(thunk_getAllAlbum())
+        dispatch(thunk_getAllPlaylists())
     }, [dispatch, username])
+    const sessionUser = useSelector((state : any) => state.session.user);
 
     const findArtist = useSelector((state) => state.artist )
 
@@ -34,9 +41,14 @@ function ArtistAlbums () {
 
     const artistAlbums = albums.filter((artist) => artist?.Artist?.username === username)
 
+    const albumSongs = songs.filter((song) => song?.Artist?.username === username)
 
 
-    const albumSongs = songs.filter((album) => album?.albumId === artistAlbums[0]?.id)
+    const findPlaylists = useSelector((state) => state.playlists)
+
+    const playlists = Object.values(findPlaylists)
+
+    const userPlaylists = playlists.filter((user) => user.userId === artist?.id)
 
 
     return (
@@ -56,18 +68,34 @@ function ArtistAlbums () {
             <div className="h-1 border-b-2 w-full border-gray-100 mb-2"></div>
             <div className="flex flex-row justify-between mt-4" style={{width: "1200px"}}>
                 <div className="">{artistAlbums.map((album) => 
-                    (<div className="flex flex-row p-4  w-900" key={album.id}>
+                    (<div className="flex flex-row p-4  w-900" key={album?.id}>
                     <img className="h-40 w-40" src={album?.imageUrl}></img>
                     <div className="flex flex-col ml-4">
                     <div className="text-xs text-gray-400">{username}</div>
                     <div className="text-sm">{album?.title}</div>
-                    <div className="flex flex-col border border-gray-300 w-650 mt-4">{albumSongs.map((song) => (
-                    <NavLink to={`/songs/${song.id}`} className="hover:bg-slate-100  flex flex-row border border-gray-300 p-1" key={song.id}>
-                            <img className="w-5 h-5" src={song.imageUrl}></img>
-                        <div className="ml-2 font-semibold text-sm leading-relaxed ">{song.title}</div>
-                    </NavLink>
-                    ))} 
+                    <div className="flex flex-col border border-gray-300 w-650 mt-4">
+                        {albumSongs.filter((song) => song?.albumId === album?.id).map((song) => (
+              <NavLink
+                to={`/songs/${song.id}`}
+                className="hover:bg-slate-100 flex flex-row border border-gray-300 p-1"
+                key={song.id}
+                >
+                <img className="w-5 h-5" src={song.imageUrl} alt={song.title} />
+                <div className="ml-2 font-semibold text-sm leading-relaxed">
+                  {song.title}
+                </div>
+              </NavLink>
+                     ))}
                     </div>
+                        {artist?.id === sessionUser?.id && 
+                            <div className="flex flex-row mt-2">
+                                 <div className="flex flex-row justify-between mb-3  p-1 items-center border border-gray-500 w-16">
+                                    <Icon icon="ph:share-bold" color="gray" width="17" />
+                                    <div className="text-xs">Share</div>
+                                </div>
+                                <EditAlbum albumId={album.id} />
+                                <DeleteAlbum albumTitle={album.title} albumId={album.id}/>
+                            </div>}
                     </div>
                 </div>))}
                 </div>
@@ -78,9 +106,15 @@ function ArtistAlbums () {
                     <div className="text-2xl text-gray-400">{artistSongs?.length}</div>
                         </div>
                         <div className="flex flex-col h-10 border-l-2 border-gray-100">
-                            <div className="ml-4">
+                            <div className="ml-4 mr-4">
                     <div className="text-xs text-gray-400">Albums</div>
                     <div className="text-2xl text-gray-400">{artistAlbums?.length}</div>
+                            </div>
+                        </div>
+                        <div className="flex flex-col h-10 border-l-2 border-gray-100">
+                            <div className="ml-4">
+                    <div className="text-xs text-gray-400">Playlists</div>
+                    <div className="text-2xl text-gray-400">{userPlaylists?.length}</div>
                             </div>
                         </div>
 

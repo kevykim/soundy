@@ -1,3 +1,7 @@
+
+
+
+
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -5,9 +9,14 @@ import { thunk_getArtist } from "../../../store/artists";
 import { NavLink } from "react-router-dom";
 import { thunk_getAllSongs } from "../../../store/songs";
 import { thunk_getAllAlbum } from "../../../store/albums";
-import { thunk_getAllPlaylists } from "../../../store/playlists";
 
-function ArtistTracks () {
+import { Icon } from "@iconify/react/dist/iconify.js";
+
+import { thunk_getAllPlaylists } from "../../../store/playlists";
+import EditPlaylist from "../../Playlists/EditPlaylist";
+import DeletePlaylist from "../../Playlists/DeletePlaylist";
+
+function ArtistPlaylists () {
     const dispatch = useDispatch();
     const {username} = useParams(); 
 
@@ -17,6 +26,7 @@ function ArtistTracks () {
         dispatch(thunk_getAllAlbum())
         dispatch(thunk_getAllPlaylists())
     }, [dispatch, username])
+    const sessionUser = useSelector((state : any) => state.session.user);
 
     const findArtist = useSelector((state) => state.artist )
 
@@ -33,15 +43,23 @@ function ArtistTracks () {
     const findAlbums = useSelector((state) => state.albums)
 
     const albums = Object.values(findAlbums)
-
+    
     const artistAlbums = albums.filter((artist) => artist?.Artist?.username === username)
+    
+    const albumSongs = songs.filter((song) => song?.Artist?.username === username)
+    
 
 
-     const findPlaylists = useSelector((state) => state.playlists)
+    const findPlaylists = useSelector((state) => state.playlists)
 
     const playlists = Object.values(findPlaylists)
 
     const userPlaylists = playlists.filter((user) => user.userId === artist?.id)
+
+    const playlistSongs = userPlaylists.map((song => song.Songs))
+    
+
+
 
     return (
         <div className="flex flex-col justify-center items-center">
@@ -59,14 +77,38 @@ function ArtistTracks () {
             </div>
             <div className="h-1 border-b-2 w-full border-gray-100 mb-2"></div>
             <div className="flex flex-row justify-between mt-4" style={{width: "1200px"}}>
-                <div className="">{artistSongs.map((song) => 
-                    (<NavLink to={`/songs/${song.id}`} className="hover:bg-slate-200 flex flex-row p-4  w-750" key={song.id}>
-                    <img className="h-40 w-40" src={song?.imageUrl}></img>
+                <div className="">{userPlaylists.map((playlist) => 
+                    (<div className="flex flex-row p-4  w-900" key={playlist?.id}>
+                    <img className="h-40 w-40" src={playlist?.imageUrl}></img>
                     <div className="flex flex-col ml-4">
                     <div className="text-xs text-gray-400">{username}</div>
-                    <div className="text-sm">{song?.title}</div>
+                    <div className="text-sm">{playlist?.name}</div>
+                    <div className="flex flex-col border border-gray-300 w-650 mt-4">
+                        {playlistSongs.map((songs) => songs?.map(song => (
+                            <NavLink
+                            to={`/songs/${song.id}`}
+                            className="hover:bg-slate-100 flex flex-row border border-gray-300 p-1"
+                            key={song.id}
+                            >
+                <img className="w-5 h-5" src={song.imageUrl} alt={song.title} />
+                <div className="ml-2 font-semibold text-sm leading-relaxed">
+                  {song.title}
+                </div>
+              </NavLink>
+                     )))}
                     </div>
-                </NavLink>))}</div>
+                        {artist?.id === sessionUser?.id && 
+                            <div className="flex flex-row mt-2">
+                                 <div className="flex flex-row justify-between mb-3  p-1 items-center border border-gray-500 w-16">
+                                    <Icon icon="ph:share-bold" color="gray" width="17" />
+                                    <div className="text-xs">Share</div>
+                                </div>
+                                <EditPlaylist playlistId={playlist?.id} />
+                                <DeletePlaylist playlistName={playlist?.name} playlistId={playlist?.id}/>
+                            </div>}
+                    </div>
+                </div>))}
+                </div>
                 <div className="flex flex-row border-l-2 border-gray-100">
                     <div className=" flex flex-row w-80 ml-8">
                         <div className="flex flex-col mr-4">
@@ -98,4 +140,4 @@ function ArtistTracks () {
 
 
 
-export default ArtistTracks;
+export default ArtistPlaylists;

@@ -6,6 +6,7 @@ import { thunk_getArtist } from "../../../store/artists";
 import { NavLink } from "react-router-dom";
 import { thunk_getAllSongs } from "../../../store/songs";
 import { thunk_getAllAlbum } from "../../../store/albums";
+import { thunk_getAllPlaylists } from "../../../store/playlists";
 
 function ArtistPage () {
     const dispatch = useDispatch();
@@ -15,6 +16,7 @@ function ArtistPage () {
         dispatch(thunk_getArtist(username))
         dispatch(thunk_getAllSongs())
         dispatch(thunk_getAllAlbum())
+        dispatch(thunk_getAllPlaylists())
     }, [dispatch, username])
 
     const findArtist = useSelector((state) => state.artist )
@@ -35,6 +37,13 @@ function ArtistPage () {
 
     const artistAlbums = albums.filter((artist) => artist?.Artist?.username === username)
 
+
+      const findPlaylists = useSelector((state) => state.playlists)
+
+    const playlists = Object.values(findPlaylists)
+
+    const userPlaylists = playlists.filter((user) => user?.userId === artist?.id)
+
     return (
         <div className="flex flex-col justify-center items-center">
         <div className="flex flex-col p-8 h-60 bg-gradient-to-r from-neutral-300 to-stone-400 justify-center w-full">
@@ -52,7 +61,7 @@ function ArtistPage () {
             <div className="h-1 border-b-2 w-full border-gray-100 mb-2"></div>
             <div className="flex flex-row justify-between mt-4" style={{width: "1200px"}}>
                 <div className="">{artistSongs.map((song) => 
-                    (<NavLink to={`/songs/${song.id}`} className="flex flex-row p-4  w-900" key={song.id}>
+                    (<NavLink to={`/songs/${song.id}`} className="hover:bg-slate-200 flex flex-row p-4  w-750" key={song.id}>
                     <img className="h-40 w-40" src={song?.imageUrl}></img>
                     <div className="flex flex-col ml-4">
                     <div className="text-xs text-gray-400">{username}</div>
@@ -66,9 +75,15 @@ function ArtistPage () {
                     <div className="text-2xl text-gray-400">{artistSongs?.length}</div>
                         </div>
                         <div className="flex flex-col h-10 border-l-2 border-gray-100">
-                            <div className="ml-4">
+                               <div className="ml-4 mr-4">
                     <div className="text-xs text-gray-400">Albums</div>
                     <div className="text-2xl text-gray-400">{artistAlbums?.length}</div>
+                            </div>
+                        </div>
+                        <div className="flex flex-col h-10 border-l-2 border-gray-100">
+                            <div className="ml-4">
+                    <div className="text-xs text-gray-400">Playlists</div>
+                    <div className="text-2xl text-gray-400">{userPlaylists?.length}</div>
                             </div>
                         </div>
 

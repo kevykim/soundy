@@ -83,7 +83,7 @@ export const thunk_editAlbum = (payload : albumPayload) => async (dispatch : any
 };
 
 export const thunk_getAlbum = (payload : albumPayload) => async (dispatch : any) => {
-    const response = await csrfFetch(`/api/albums/${payload.id}`)
+    const response = await csrfFetch(`/api/albums/${payload}`)
     if (response.ok) {
         const data = await response.json()
         dispatch(get_album(data))
@@ -144,7 +144,7 @@ const albumReducer = (state = initialState, action : any) => {
             newState[action.albums.id] = action.albums
             return newState
         case getAllAlbum:
-            newState = {}
+            newState = {...state}
             action.albums.Albums.forEach((album : albumReducer) => {
                 newState[album.id] = album
             })

@@ -15,6 +15,7 @@ import {Icon} from '@iconify/react'
 import EditableComment from "../../Comments/EditComment/editComment";
 
 import detail from '../../../public/assets/detail.png'
+import AddToPlaylist from "../../Playlists/AddToPlaylist";
 
 function SongsDetail() {
         const dispatch = useDispatch();
@@ -26,6 +27,9 @@ function SongsDetail() {
 
         const findComments = useSelector((state : any) => state.comments)
         const allComments : commentsInt[] = Object.values(findComments)
+
+        const filteredComments = allComments.filter((comment) => String(comment.songId) === id )
+
 
         const [showDelete, setShowDelete] = useState(false);
 
@@ -74,10 +78,7 @@ function SongsDetail() {
          (sessionUser && sessionUser?.id !== findSong?.userId) && 
          (< CreateComment songId={id} userId={sessionUser?.id} username={sessionUser?.username}/>)}
          <div className="flex flex-row ml-10">
-         <div className="flex flex-row justify-between  mt-3 mb-3  p-1 items-center border border-gray-500 w-28">
-        <Icon icon="iconoir:playlist-add" color="gray" width="17" />
-        <div className="text-xs">Add to playlist</div>
-         </div>
+         <AddToPlaylist />
          <div className="flex flex-row justify-between ml-2 mt-3 mb-3  p-1 items-center border border-gray-500 w-16">
             <Icon icon="ph:share-bold" color="gray" width="17" />
             <div className="text-xs">Share</div>
@@ -90,7 +91,7 @@ function SongsDetail() {
         <div className="h-1 border-b-2 w-680 ml-10 border-black-500 mb-2"></div>
         <div className="flex flex-row w-750 border-r-2 border-gray-200">
             <div className="flex flex-col justify-start items-center p-2">
-            <img className="w-20 h-20" src={findSong?.Artist.profileImg}></img>
+            <img className="w-20 h-20" src={findSong?.Artist?.profileImg}></img>
             <div className="p-2 text-xs">
                 {findSong?.Artist?.username}
             </div>
@@ -99,10 +100,10 @@ function SongsDetail() {
                 <div className="text-sm p-4">{findSong?.description}</div>
                 <div className="flex flex-row items-center ml-1">
             <Icon icon="fluent:comment-28-filled" color="gray" />
-            <div className="text-sm ml-2 text-gray-500">{allComments.length} comments</div>
+            <div className="text-sm ml-2 text-gray-500">{filteredComments?.length} comments</div>
                 </div>
             <div className="h-1 border-b-2 border-black-500 mb-2"></div>
-            {allComments.map((comments : commentsInt) => 
+            {!filteredComments?.length ? (<div></div>) : filteredComments.map((comments : commentsInt) => 
             <div className="flex flex-row items-center p-2" key={comments.id}>
                     <div className="flex flex-row w-96">
                     <img className="w-10 h-10" src={comments?.User?.profileImg}></img>

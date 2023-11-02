@@ -18,15 +18,16 @@ const playlistValidation = [
 // CREATE a Playlist
 router.post('/', requireAuth, playlistValidation, async (req, res) => {
 
-    const {name, imageUrl} = req.body;
+    const {name, imageUrl, userId} = req.body;
 
-    const createSong = await Playlist.create({
+    const createPlaylist = await Playlist.create({
+        userId,
         name,
         imageUrl : imageUrl || 'image.com'
     });
 
     res.status(201);
-    return res.json({createSong});
+    return res.json({createPlaylist});
 
 });
 
@@ -77,6 +78,21 @@ router.post('/:playlistId/songs', requireAuth, async (req, res, next) => {
     }
 });
 
+
+// GET all PLAYLISTS
+router.get('/', async (req, res, next) => {
+
+    const findPlaylist = await Playlist.findAll({
+      include: [
+        { model: User },
+        { model: Song, through: { attributes: [] } }
+      ],
+    });
+
+    res.status(200);
+    return res.json(findPlaylist);
+
+}); 
 
 
 // GET all playlists created by current user
