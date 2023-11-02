@@ -28,12 +28,19 @@ function DeleteModal({id, songTitle}) {
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
 
-            <div className="w-96 h-48 flex flex-col justify-evenly items-center p-2">
-                <h1 className="text-md font-bold text-red-500">Are you sure you want to delete this track?</h1>
-                <div className="text-sm underline underline-offset-4">{songTitle}</div>
-                <div className="mt-2">
-                <button className="w-20 h-10 bg-green-700 hover:bg-green-900 text-white rounded-md font-bold" onClick={deleteFunction}>Delete</button>
-                <button className="w-20 h-10 bg-green-500 hover:bg-green-200 text-white rounded-md font-bold ml-1" onClick={() => setShowModal(false)}>Cancel</button>
+            <div className="w-650 h-48 flex flex-col justify-evenly p-2">
+               <div className="flex flex-row justify-between border-b-2 border-gray-200">
+                      <h1 className="flex self-center font-semibold text-2xl mb-2">Delete Track</h1>
+                      <div className="flex justify-end">
+                      <button onClick={() => setShowModal(false)} className="hover:bg-gray-300 rounded-sm p-2">
+                            <Icon icon="octicon:x-12" />
+                            </button>
+                      </div>
+                      </div>
+                <h1 className="text-xs font-bold self-center">Are you sure you want to delete {songTitle}? This action cannot be undone.</h1>
+                <div className="self-center">
+                <button className="w-20 h-8 bg-gray-200 hover:bg-green-200 text-white rounded-sm font-bold " onClick={() => setShowModal(false)}>Cancel</button>
+                <button className="w-20 h-8 bg-gray-300 hover:bg-green-900 text-white rounded-sm font-bold ml-1" onClick={deleteFunction}>Delete</button>
                 </div>
             </div>
         </Modal>

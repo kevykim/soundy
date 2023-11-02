@@ -79,7 +79,7 @@ export const thunk_createPlaylist = (payload : string) => async (dispatch : any)
 };
 
 export const thunk_addSongToPlaylist = (payload : artistPayload) => async (dispatch : any) => {
-    const response = await csrfFetch(`/api/playlists/${payload.id}/songs`, {
+    const response = await csrfFetch(`/api/playlists/${payload.playlistId}/songs`, {
         method : 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(payload)

@@ -41,7 +41,7 @@ function ArtistTracks () {
 
     const playlists = Object.values(findPlaylists)
 
-    const userPlaylists = playlists.filter((user) => user.userId === artist.id)
+    const userPlaylists = playlists.filter((user) => user.userId === artist?.id)
 
     return (
         <div className="flex flex-col justify-center items-center">
