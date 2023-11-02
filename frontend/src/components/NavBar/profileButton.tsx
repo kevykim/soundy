@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
+import { NavLink } from "react-router-dom";
 
 interface User {
     username : string
@@ -44,7 +45,7 @@ function ProfileButton({ user } : {user : User}) {
       </button>
       {showMenu && (
         <div className="flex flex-col absolute top-14 right-[-1rem] w-32 bg-white text-black border border-gray-400 space-y-2 text-sm font-bold">
-          <div className="hover:bg-slate-100 text-center p-2">{user.username}</div>
+          <NavLink to={`/artists/${user.username}`} className="hover:bg-slate-100 text-center p-2">Profile</NavLink>
             <button style={{ margin: 0 }} className="hover:bg-slate-100 text-center p-2" onClick={logout}>Sign out</button>
         </div>
       )}
