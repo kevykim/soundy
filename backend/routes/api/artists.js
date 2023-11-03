@@ -4,6 +4,14 @@ const router = express.Router();
 const { Song, User, Playlist, Album } = require('../../db/models');
 
 
+// GET all Artists
+router.get('/', async (req, res, next) => {
+  let users = await User.findAll()
+
+  res.status(200);
+  return res.json(users)
+});
+
 
 // GET details of an Artist from ID
 router.get('/:username', async (req, res, next) => {
