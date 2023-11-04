@@ -12,14 +12,13 @@ import SignupFormPage from './components/SignUpPage';
 import Navigation from './components/NavBar/navbar';
 import SongsDetail from './components/Songs/SongsDetail';
 import UploadSong from './components/Songs/UploadSong';
-import YourTracks from './components/Songs/Yourtracks';
 import EditTracks from './components/Songs/EditTracks';
 import Footer from './components/Footer';
-import YourAlbums from './components/Albums/YourAlbums';
 import ArtistPage from './components/Artist/ArtistPage';
 import ArtistTracks from './components/Artist/ArtistTracks';
 import ArtistAlbums from './components/Artist/ArtistAlbums';
 import ArtistPlaylists from './components/Artist/ArtistPlaylists';
+import Discover from './components/Discover';
 
 function App() {
 
@@ -41,13 +40,12 @@ function App() {
         <Route path='/signup' element={<SignupFormPage />} />
         <Route path='/songs/:id' element={<SongsDetail />} />
         <Route path='/upload' element={<UploadSong />} />
-        <Route path='/tracks' element={<YourTracks />}/>
         <Route path='/songs/:id/edit' element={<EditTracks />}/>
-        <Route path='/albums' element={<YourAlbums />}/>
         <Route path='/artists/:username' element={<ArtistPage />} />
         <Route path='/artists/:username/tracks' element={<ArtistTracks />} />
         <Route path='/artists/:username/albums' element={<ArtistAlbums />} />
         <Route path='/artists/:username/playlists' element={<ArtistPlaylists />}/>
+        <Route path='/discover' element={<Discover />}/>
      </Routes>
      )}    
       </div>

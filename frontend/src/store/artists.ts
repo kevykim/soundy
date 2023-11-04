@@ -1,6 +1,7 @@
 import { csrfFetch } from "./csrf";
 
 // types
+const getAllArtists = '/artists/getAllArtists'
 const getArtist = '/artists/getArtist'
 const getArtistSongs = '/artists/getArtistSongs'
 const getArtistPlaylists = '/artists/getArtistPlaylists'
@@ -8,6 +9,13 @@ const getArtistAlbums = '/artists/getArtistAlbums'
 
 
 //action creators
+const get_all_artists = (artist : string) => {
+    return {
+        type : getAllArtists,
+        artist
+    }
+};
+
 const get_artist = (artist : string) => {
     return {
         type: getArtist,
@@ -41,6 +49,14 @@ const get_artist_albums = (artist : string) => {
 
 
 //thunks
+export const thunk_getAllArtists = () => async (dispatch) => {
+    const response = await csrfFetch(`/api/artists`)
+    if (response.ok) {
+        const data = await response.json()
+        dispatch(get_all_artists(data))
+    }
+};
+
 export const thunk_getArtist = (payload : artistPayload) => async (dispatch : any) => {
     const response = await csrfFetch(`/api/artists/${payload}`)
     if (response.ok) {
@@ -81,6 +97,12 @@ const initialState = {}
 const artistReducer = (state = initialState, action : any) => {
     let newState : any = {...state};
     switch (action.type) {
+        case getAllArtists:
+            newState = {...state}
+            action.artist.forEach((artist : artistReducer) => {
+                newState[artist.id] = artist
+            })
+            return newState
         case getArtist:
             newState[action.artist.id] = action.artist
             return newState

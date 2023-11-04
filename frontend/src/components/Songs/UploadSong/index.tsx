@@ -83,8 +83,6 @@ function UploadSong() {
         : <>
             <div className="flex flex-row p-4 z-10 justify-between w-64 h-14">
                 <NavLink className="hover:border-b-2 border-green-800 hover:text-green-800 h-11" to='/upload'>Upload</NavLink>
-                <NavLink className="hover:border-b-2 border-green-800 hover:text-green-800 h-11" to='/tracks'>Your tracks</NavLink>
-                <NavLink className="hover:border-b-2 border-green-800 hover:text-green-800 h-11" to='/albums'>Albums</NavLink>
             </div>
             <div className="h-1 border-b-2 border-black-500 mb-2"></div>
             {/* {(errors.length > 0 && submitted === true) && (<div>{errors}</div>)} */}

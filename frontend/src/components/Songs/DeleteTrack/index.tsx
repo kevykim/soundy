@@ -22,9 +22,10 @@ function DeleteModal({id, songTitle}) {
   
   return (
     <>
-      <button className="bg-green-800 hover:bg-green-900 text-white font-bold py-2 px-4 disabled:bg-gray-500 rounded shadow-sm" onClick={() => setShowModal(true)}>
-        <Icon icon="icon-park-outline:delete" />
-      </button>
+      <button className="flex flex-row justify-between mb-3 ml-2 p-1 items-center border border-gray-500 w-28" onClick={() => setShowModal(true)}>
+                                    <Icon icon="icon-park-outline:delete" color="gray"  width="17" />
+                                    <div className="text-xs">Delete Track</div>
+                                </button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
 

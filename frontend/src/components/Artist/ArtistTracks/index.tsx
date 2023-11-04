@@ -6,6 +6,9 @@ import { NavLink } from "react-router-dom";
 import { thunk_getAllSongs } from "../../../store/songs";
 import { thunk_getAllAlbum } from "../../../store/albums";
 import { thunk_getAllPlaylists } from "../../../store/playlists";
+import DeleteModal from "../../Songs/DeleteTrack";
+
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 function ArtistTracks () {
     const dispatch = useDispatch();
@@ -17,6 +20,8 @@ function ArtistTracks () {
         dispatch(thunk_getAllAlbum())
         dispatch(thunk_getAllPlaylists())
     }, [dispatch, username])
+
+    const sessionUser = useSelector((state : any) => state.session.user);
 
     const findArtist = useSelector((state) => state.artist )
 
@@ -60,13 +65,33 @@ function ArtistTracks () {
             <div className="h-1 border-b-2 w-full border-gray-100 mb-2"></div>
             <div className="flex flex-row justify-between mt-4" style={{width: "1200px"}}>
                 <div className="">{artistSongs.map((song) => 
-                    (<NavLink to={`/songs/${song.id}`} className="hover:bg-slate-200 flex flex-row p-4  w-750" key={song.id}>
+                    (
+                    <div className="flex flex-col p-4 bg-slate-100 border border-gray-400 w-750 mt-4 mb-4 shadow-md">
+                    <div className=" flex flex-row mb-4" key={song.id}>
                     <img className="h-40 w-40" src={song?.imageUrl}></img>
                     <div className="flex flex-col ml-4">
                     <div className="text-xs text-gray-400">{username}</div>
-                    <div className="text-sm">{song?.title}</div>
+                    <NavLink to={`/songs/${song.id}`} className="hover:underline hover:text-green-700 text-sm">{song?.title}</NavLink>
                     </div>
-                </NavLink>))}</div>
+                </div>
+                    {artist?.id === sessionUser?.id && 
+                            <div className="flex flex-row mt-2">
+                                 <div className="flex flex-row justify-between mb-3  p-1 items-center border border-gray-500 w-16">
+                                    <Icon icon="ph:share-bold" color="gray" width="17" />
+                                    <div className="text-xs">Share</div>
+                                </div>
+                                <NavLink to={`/songs/${song?.id}/edit`} className="flex flex-row justify-between mb-3 ml-2 p-1 items-center border border-gray-500 w-14">
+                                    <Icon icon="icon-park-outline:edit-two" color="gray" width="17" />
+                                    <div className="text-xs">Edit</div>
+                                 </NavLink>
+                                <DeleteModal songTitle={song?.title} id={song?.id}/>
+                            </div>}
+                </div>
+                ))}
+                
+                
+                </div>
+                
                 <div className="flex flex-row border-l-2 border-gray-100">
                     <div className=" flex flex-row w-80 ml-8">
                         <div className="flex flex-col mr-4">

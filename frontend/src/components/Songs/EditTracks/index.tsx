@@ -82,7 +82,7 @@ function EditTracks () {
         }
         
         if (submitted) {
-            navigate('/tracks')
+            navigate(`/songs/${id}`)
         }
 
 
@@ -105,15 +105,13 @@ function EditTracks () {
             <div className="text-xl font-bold">
                 You can only edit your tracks
             </div>
-                <NavLink className="text-4xl bg-green-800 hover:bg-green-900 text-white font-bold py-2 px-4 w-80 text-center rounded shadow-sm" to={'/tracks'}>Click here to your tracks</NavLink>
+                <NavLink className="text-4xl bg-green-800 hover:bg-green-900 text-white font-bold py-2 px-4 w-80 text-center rounded shadow-sm" to={`/artists/${sessionUser.username}`}>Click here to your profile</NavLink>
             </div>
         </div>) 
         : ( 
         <>
         <div className="flex flex-row p-4 z-10 justify-between w-64 h-14">
                 <NavLink className="hover:border-b-2 border-green-800 hover:text-green-800 h-11" to='/upload'>Upload</NavLink>
-                <NavLink className="hover:border-b-2 border-green-800 hover:text-green-800 h-11" to='/tracks'>Your tracks</NavLink>
-                <NavLink className="hover:border-b-2 border-green-800 hover:text-green-800 h-11" to='/albums'>Albums</NavLink>
             </div>
             <div className="h-1 border-b-2 border-black-500 mb-2"></div>
             <div className="flex flex-col justify-center items-center mt-4">
