@@ -7,7 +7,6 @@ import { Modal } from '../../../context/Modal';
 import { useDispatch } from 'react-redux';
 
 import { Icon } from '@iconify/react/dist/iconify.js';
-import React from 'react';
 import { thunk_deleteAlbum } from '../../../store/albums';
 
 

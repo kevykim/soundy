@@ -8,6 +8,7 @@ import { thunk_createAlbum } from "../../../store/albums";
 import { thunk_getArtistAlbums } from "../../../store/artists";
 
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { ReactNode } from "react";
 
 function CreateAlbum () {
 
@@ -21,12 +22,12 @@ function CreateAlbum () {
     const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
     reset,
     // getValues,
-  } = useForm();
+  } = useForm<FieldValues>();
 
-    const onSubmit = async (data) => {
+    const onSubmit = async (data : FieldValues) => {
         const {title, description, year, imageUrl} = data
         
 
@@ -74,7 +75,7 @@ function CreateAlbum () {
                 },
               })}
                />
-               {errors?.title && (<p className="text-red-500 text-xs">{errors.title.message}</p>)}
+               {errors?.title && (<p className="text-red-500 text-xs">{errors.title.message as ReactNode}</p>)}
                 <input
             className={`focus:outline-none focus:ring-1 ${!errors?.description ? "focus:ring-green-800 focus:border-green-800" : "focus:ring-red-500 focus:border-red-500 border-2 border-red-500"}
            form-input w-full rounded-md shadow-sm`}
@@ -87,7 +88,7 @@ function CreateAlbum () {
                 },
               })}
                />
-               {errors?.description && (<p className="text-red-500 text-xs">{errors.description.message}</p>)}
+               {errors?.description && (<p className="text-red-500 text-xs">{errors.description.message as ReactNode}</p>)}
                 <input
             className={`focus:outline-none focus:ring-1 ${!errors?.year ? "focus:ring-green-800 focus:border-green-800" : "focus:ring-red-500 focus:border-red-500 border-2 border-red-500"}
            form-input w-full rounded-md shadow-sm`}
@@ -104,7 +105,7 @@ function CreateAlbum () {
                 },
               })}
                />
-               {errors?.year && (<p className="text-red-500 text-xs">{errors.year.message}</p>)}
+               {errors?.year && (<p className="text-red-500 text-xs">{errors.year.message as ReactNode}</p>)}
                <input
              className={`focus:outline-none focus:ring-1 ${!errors?.imageUrl ? "focus:ring-green-800 focus:border-green-800" : "focus:ring-red-500 focus:border-red-500 border-2 border-red-500"}
            form-input w-full rounded-md shadow-sm`}
@@ -117,7 +118,7 @@ function CreateAlbum () {
                 }
                })}
                />
-                {errors?.imageUrl && (<p className="text-red-500 text-xs">{errors.imageUrl.message}</p>)}
+                {errors?.imageUrl && (<p className="text-red-500 text-xs">{errors.imageUrl.message as ReactNode}</p>)}
                      <button className="bg-green-800 hover:bg-green-900 text-white font-bold py-2 px-4 rounded" type="submit" >Submit</button>
 
                     </form>
